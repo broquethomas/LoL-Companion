@@ -1,0 +1,240 @@
+
+{% extends 'base.html' %}
+
+{% block head %}
+<style type="text/css" media="screen">
+        .loader {
+            border: 16px solid #f3f3f3; /* Light grey */
+            border-top: 16px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+</style>
+
+{% endblock %}
+
+{% block body %}
+<script>
+    
+    let apiKey = "?api_key=RGAPI-1242c3c9-9587-476b-b81e-caa5271ef701"
+    let apiKeyEsports = "?api_key=0TvQnueqKa5mxJntVWt0w4LpLfEkrV1Ta8rQBb9Z"
+    let matchURL = "https://na1.api.riotgames.com/lol/match/v4/matches/"
+    let esportsURL = "https://esports-api.lolesports.com/persisted/gw/getCompletedEvents?hl=en-US"
+    let esportsMemberURL = "https://feed.lolesports.com/livestats/v1/window/"
+    var collectedGameData = []
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+                        "July", "August", "September", "October", "November", "December"
+    ];
+
+    async function getMatchID(){
+        var matchID = String(document.getElementById("matchID").value).split("/")[6]
+        var url = matchURL + matchID + apiKey
+        var urlEsports = esportsURL
+        var esportMembers = esportsMemberURL
+        //fetchAsyncRiot(url) 
+        swap()
+        var collectedData = await fetchAsyncEsports(urlEsports)        
+        document.getElementById("loadingString").innerText = "Updating Database"
+        console.log(collectedData)
+        updateDataBase(collectedData)
+        //swap()
+    }
+
+    async function updateDataBase(collectedData){
+        let playerCollection = []
+        for(var i = 0; i < collectedData[1].length; i++){
+            for(var x = 0; x < collectedData[1][i].length-1; x++){
+                let teamA = true
+                let oddIndex = 1
+                for(var y = 0; y < collectedData[1][i][x].length; y++){
+                    if(teamA){
+                        player = [collectedData[0][0][i][2], collectedData[1][i][x][5][y*2], collectedData[0][0][i][0].replace(" ", "."), collectedData[0][0][i][1], collectedData[1][i][x][5][oddIndex], collectedData[1][i][x][y][0], collectedData[1][i][x][y][2], collectedData[1][i][x][y][1], collectedData[1][i][x][y][3], collectedData[1][i][x][2][0], collectedData[2][i]]
+                        oddIndex += 2
+                        
+                        if(y == collectedData[1][i][x].length-1){
+                            teamA = false
+                        }
+                    }else{
+                        player = [collectedData[0][1][i][2], collectedData[1][i][x][5][y*2], collectedData[0][1][i][0].replace(" ", "."), collectedData[0][1][i][1], collectedData[1][i][x][5][oddIndex], collectedData[1][i][x][y][0], collectedData[1][i][x][y][2], collectedData[1][i][x][y][1], collectedData[1][i][x][y][3], collectedData[1][i][x][2][1], collectedData[2][i]]
+                        oddIndex += 2
+                        
+                    }
+                    if(player[1] != undefined){
+                        
+                        theWindow = window.open( 
+                             "/" + player[0] + "/" + player[1].replace(" ", ".") + "/" + player[2].replace(" ", ".") + "/" + player[3] + "/" + player[4] + "/" + player[5] + "/" + player[6] + "/" + player[7] + "/" + player[8] + "/" + player[9] + "/" + player[10],
+                            '_blank' // <- This is what makes it open in a new window.
+                        );
+                        theWindow.close()
+                        playerCollection.push(player)
+                    }
+                    
+                }   
+            }
+        }
+        console.log(playerCollection)
+    }
+    async function fetchAsyncRiot (url) {
+        let response = await fetch(url);
+        let data = await response.json();
+        let teamA = []
+        let teamB = []
+        let teamAWinStatus = true
+        if(String(data.teams[0].win) == "Fail"){
+            teamAWinStatus = false
+        }
+        for(var i =0; i < data.participants.length; i++){    
+            let participantName, participant, participantKills, participantAssists, participantDeaths, participantCreepScore, participantTripleKills, participantQuadKills, participantPentaKills, participantScore
+            let player = [Number(data.gameId), String(data.participantIdentities[i].player.summonerName),
+            Number(data.participants[i].stats.kills), Number(data.participants[i].stats.assists), Number(data.participants[i].stats.deaths), Number(data.participants[i].stats.totalMinionsKilled), Number(data.participants[i].stats.tripleKills), Number(data.participants[i].stats.quadraKills), Number(data.participants[i].stats.pentaKills)]
+            if( i < data.participants.length / 2 ){
+                teamA.push(player)
+            }else{
+                teamB.push(player)
+            }
+            theWindow = window.open( 
+                "/" + player[0] + "/" + player[1] + "/" + player[2] + "/" + player[3] + "/" + player[4] + "/" + player[5] + "/" + player[6] + "/" + player[7] + "/" + player[8],
+                '_blank' // <- This is what makes it open in a new window.
+            );
+            theWindow.close()
+        }
+        return data;
+    }
+
+    async function fetchAsyncEsports (url) {
+        let response = await fetch(url, {
+                            headers: {
+                                "x-api-key": "0TvQnueqKa5mxJntVWt0w4LpLfEkrV1Ta8rQBb9Z"
+                            }
+                                        });
+        let data = await response.json();
+        let teamA = []
+        let teamB = []
+        let teams = []
+        var location = 0        
+        let someTime = new Date()
+        let timeNow = new Date();
+        let allGames = []
+        let matchTypes = []
+        for(var i =0; i < data.data.schedule.events.length; i++){ 
+            var leagueName = data.data.schedule.events[i].league.name
+            var gameID = data.data.schedule.events[i].games[0].id
+            if((leagueName == "LCS Academy" || leagueName == "LCS") && gameID != location){
+                let newStartTime = new Date(data.data.schedule.events[i].startTime);
+                newStartTime.setSeconds((newStartTime.getSeconds() + ((timeNow - newStartTime) / 1000)));
+                newStartTime.setSeconds(((Math.floor(newStartTime.getSeconds() / 10)) * 10) - 30);
+                location = gameID
+                teamA.push([data.data.schedule.events[i].match.teams[0].name, String(data.data.schedule.events[i].match.teams[0].result.gameWins), gameID])
+                teamB.push([data.data.schedule.events[i].match.teams[1].name, String(data.data.schedule.events[i].match.teams[1].result.gameWins), gameID])
+                allGames.push(memberData = await fetchAsyncEsportsMembers(esportsMemberURL + gameID + "?startingTime=" + newStartTime.toISOString(), gameID ))
+                if(leagueName == "LCS Academy"){
+                    matchTypes.push(0)
+                }else{
+                    matchTypes.push(1)
+                }
+            }
+        }
+        teams.push(teamA)
+        teams.push(teamB)
+        collectedGameData = [teams, allGames]
+        console.log(data)
+        return [teams, allGames, matchTypes];
+    }
+
+    async function fetchAsyncEsportsMembers (url, gameID) {
+        let response = await fetch(url, {
+                            headers: {
+                                "x-api-key": "0TvQnueqKa5mxJntVWt0w4LpLfEkrV1Ta8rQBb9Z"
+                            }
+                    });
+        let data = await response.json();
+        let playerName, playerKills, playerAssists, playerCreepScore, playerTripleKills, playerQuadraKills, playerPentaKills
+        
+        let teamA = []
+        let teamB = []
+        var teamAMembers = []
+        var teamBMembers = []
+        var teamKills = []
+        var teamAKills = 0
+        var teamBKills = 0 
+        for(var i = 0; i < data.gameMetadata.blueTeamMetadata.participantMetadata.length; i++){
+            teamA.push(data.gameMetadata.blueTeamMetadata.participantMetadata[i].summonerName)
+            teamA.push(data.gameMetadata.blueTeamMetadata.participantMetadata[i].championId)
+        }
+        for(var x = 0; x < data.frames[data.frames.length - 1].redTeam.participants.length; x++){
+                
+                playerKills = data.frames[data.frames.length - 1].redTeam.participants[x].kills
+                playerDeaths = data.frames[data.frames.length - 1].redTeam.participants[x].deaths
+                playerAssists = data.frames[data.frames.length - 1].redTeam.participants[x].assists
+                playerCreepScore = data.frames[data.frames.length - 1].redTeam.participants[x].creepScore
+                teamAMembers.push([playerKills, playerDeaths, playerAssists, playerCreepScore, gameID])
+                teamAKills += playerKills
+        }
+        for(var i = 0; i < data.gameMetadata.redTeamMetadata.participantMetadata.length; i++){
+            teamB.push(data.gameMetadata.redTeamMetadata.participantMetadata[i].summonerName)
+            teamB.push(data.gameMetadata.redTeamMetadata.participantMetadata[i].championId)
+
+        }
+        for(var x = 0; x < data.frames[data.frames.length - 1].blueTeam.participants.length; x++){
+                playerKills = data.frames[data.frames.length - 1].blueTeam.participants[x].kills
+                playerDeaths = data.frames[data.frames.length - 1].blueTeam.participants[x].deaths
+                playerAssists = data.frames[data.frames.length - 1].blueTeam.participants[x].assists
+                playerCreepScore = data.frames[data.frames.length - 1].blueTeam.participants[x].creepScore
+                teamBMembers.push([playerKills, playerDeaths, playerAssists, playerCreepScore, gameID])
+                teamBKills += playerKills
+        }
+        var output = [teamA, teamB]
+        teamAMembers.push(teamA)
+        teamBMembers.push(teamB)
+        teamKills = [teamAKills, teamBKills]
+        var matchMembers = [teamAMembers, teamBMembers, teamKills]
+        
+        return matchMembers
+    }
+
+    function swap() {
+        var x = document.getElementById("loader");
+        if (x.style.display === "none") {
+                x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        } 
+    }
+
+    
+
+    
+</script>
+<div class="MainContainer">
+    <span><h1>League Of Legends Fantasy League Companion</h1></span>
+    
+        MatchID URL: <input style="width: 20rem;" type="text" name="matchID" id="matchID"><br>
+        <input type="submit" value="Pull Match Data" onclick="getMatchID()">
+
+    <div class="Top">
+        <br><br>
+            <div style="display: none;" class="loader" id="loader">
+                <h1 id="loadingString">Collecting Data</h1>
+            </div>
+
+    </div>
+    <div class="Mid">
+        <div class="Left">
+
+        </div>
+    <div class="Center">
+
+    </div>
+    <div class="Right">
+
+    </div>
+</div>
+
+{% endblock %}
+
