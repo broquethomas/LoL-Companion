@@ -69,7 +69,6 @@
                     }
                     if(collectedData[1][i][x][5][y*2] != undefined){
 
-                        console.log(JSON.stringify(player))
                         const postResponse = await fetch('http://localhost:5000/updateDatabase', {
                             method: 'POST',
                             headers: {
@@ -78,11 +77,7 @@
                             },
                             body: JSON.stringify(player)
                         })
-                        console.log(JSON.stringify(player))
-                        
-                        
                     }
-                    
                 }   
             }
         }
@@ -137,8 +132,8 @@
                 newStartTime.setSeconds((newStartTime.getSeconds() + ((timeNow - newStartTime) / 1000)));
                 newStartTime.setSeconds(((Math.floor(newStartTime.getSeconds() / 10)) * 10) - 30);
                 location = gameID
-                teamA.push([data.data.schedule.events[i].match.teams[0].name, String(data.data.schedule.events[i].match.teams[0].result.gameWins), gameID])
-                teamB.push([data.data.schedule.events[i].match.teams[1].name, String(data.data.schedule.events[i].match.teams[1].result.gameWins), gameID])
+                teamA.push([data.data.schedule.events[i].match.teams[0].name.replace(" ", "."), String(data.data.schedule.events[i].match.teams[0].result.gameWins), gameID])
+                teamB.push([data.data.schedule.events[i].match.teams[1].name.replace(" ", "."), String(data.data.schedule.events[i].match.teams[1].result.gameWins), gameID])
                 allGames.push(memberData = await fetchAsyncEsportsMembers(esportsMemberURL + gameID + "?startingTime=" + newStartTime.toISOString(), gameID ))
                 if(leagueName == "LCS Academy"){
                     matchTypes.push(0)
@@ -171,7 +166,7 @@
         var teamAKills = 0
         var teamBKills = 0 
         for(var i = 0; i < data.gameMetadata.blueTeamMetadata.participantMetadata.length; i++){
-            teamA.push(data.gameMetadata.blueTeamMetadata.participantMetadata[i].summonerName)
+            teamA.push(data.gameMetadata.blueTeamMetadata.participantMetadata[i].summonerName.replace(" ", "."))
             teamA.push(data.gameMetadata.blueTeamMetadata.participantMetadata[i].championId)
         }
         for(var x = 0; x < data.frames[data.frames.length - 1].redTeam.participants.length; x++){
@@ -184,9 +179,8 @@
                 teamAKills += playerKills
         }
         for(var i = 0; i < data.gameMetadata.redTeamMetadata.participantMetadata.length; i++){
-            teamB.push(data.gameMetadata.redTeamMetadata.participantMetadata[i].summonerName)
+            teamB.push(data.gameMetadata.redTeamMetadata.participantMetadata[i].summonerName.replace(" ", "."))
             teamB.push(data.gameMetadata.redTeamMetadata.participantMetadata[i].championId)
-
         }
         for(var x = 0; x < data.frames[data.frames.length - 1].blueTeam.participants.length; x++){
                 playerKills = data.frames[data.frames.length - 1].blueTeam.participants[x].kills
@@ -201,7 +195,6 @@
         teamBMembers.push(teamB)
         teamKills = [teamAKills, teamBKills]
         var matchMembers = [teamAMembers, teamBMembers, teamKills]
-        
         return matchMembers
     }
 
@@ -214,9 +207,6 @@
         } 
     }
 
-    
-
-    
 </script>
 <div class="MainContainer">
     <span><h1>League Of Legends Fantasy League Companion</h1></span>
