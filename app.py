@@ -1,5 +1,6 @@
 from flask import Flask, render_template, url_for
 from flask_sqlalchemy import SQLAlchemy
+from flask import request
 from datetime import datetime
 import sqlite3
 import sys
@@ -63,6 +64,25 @@ class MatchStats(db.Model):
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/updateDatabase', methods=['POST'])
+def store_game_data():
+    if (EsportsTeams.query.filter_by(teamName = request.get_json()["teamName"]).first() == None):
+        createEsportsTeam(str(request.get_json()["teamName"]))
+    
+    teamID = int(getEsportsTeam(request.get_json()["teamName"]).teamID)
+    
+    if (EsportsUser.query.filter_by(playerName = request.get_json()["playerName"]).first() == None):
+        createEsportsUser(str(request.get_json()["playerName"]), teamID)
+
+    user = getEsportsUser(request.get_json()["playerName"])
+    print(request.get_json()["playerName"], file=sys.stderr)
+    updateTeamMatchWins(teamID, int(request.get_json()["matchWin"]))
+    createEsportsMatch(int(request.get_json()["gameID"]), user.playerID, str(request.get_json()["legend"]), int(request.get_json()["kills"]), int(request.get_json()["assists"]), int(request.get_json()["deaths"]), int(request.get_json()["creepScore"]), int(request.get_json()["teamTotal"]), int(request.get_json()["matchType"]))        
+
+    return render_template('index.html')
+
+
 
 @app.route('/<matchID>/<playerName>/<kills>/<assists>/<deaths>/<creepScore>/<tripleKills>/<quadraKills>/<pentaKills>')
 def indexAddPlayer(matchID, playerName, kills, assists, deaths, creepScore, tripleKills, quadraKills, pentaKills):

@@ -43,6 +43,8 @@
         document.getElementById("loadingString").innerText = "Updating Database"
         console.log(collectedData)
         updateDataBase(collectedData)
+        document.getElementById("loadingString").innerText = "Done"
+
         //swap()
     }
 
@@ -54,31 +56,36 @@
                 let oddIndex = 1
                 for(var y = 0; y < collectedData[1][i][x].length; y++){
                     if(teamA){
-                        player = [collectedData[0][0][i][2], collectedData[1][i][x][5][y*2], collectedData[0][0][i][0].replace(" ", "."), collectedData[0][0][i][1], collectedData[1][i][x][5][oddIndex], collectedData[1][i][x][y][0], collectedData[1][i][x][y][2], collectedData[1][i][x][y][1], collectedData[1][i][x][y][3], collectedData[1][i][x][2][0], collectedData[2][i]]
+                        player = {"gameID": collectedData[0][0][i][2], "playerName": collectedData[1][i][x][5][y*2], "teamName": collectedData[0][0][i][0].replace(" ", "."), "matchWin": collectedData[0][0][i][1], "legend": collectedData[1][i][x][5][oddIndex], "kills": collectedData[1][i][x][y][0], "assists": collectedData[1][i][x][y][2], "deaths": collectedData[1][i][x][y][1], "creepScore": collectedData[1][i][x][y][3], "teamTotal": collectedData[1][i][x][2][0], "matchType": collectedData[2][i]}
                         oddIndex += 2
                         
                         if(y == collectedData[1][i][x].length-1){
                             teamA = false
                         }
                     }else{
-                        player = [collectedData[0][1][i][2], collectedData[1][i][x][5][y*2], collectedData[0][1][i][0].replace(" ", "."), collectedData[0][1][i][1], collectedData[1][i][x][5][oddIndex], collectedData[1][i][x][y][0], collectedData[1][i][x][y][2], collectedData[1][i][x][y][1], collectedData[1][i][x][y][3], collectedData[1][i][x][2][1], collectedData[2][i]]
+                        player = {"gameID": collectedData[0][1][i][2], "playerName": collectedData[1][i][x][5][y*2], "teamName": collectedData[0][1][i][0].replace(" ", "."), "matchWin": collectedData[0][1][i][1], "legend": collectedData[1][i][x][5][oddIndex], "kills": collectedData[1][i][x][y][0], "assists": collectedData[1][i][x][y][2], "deaths": collectedData[1][i][x][y][1], "creepScore": collectedData[1][i][x][y][3], "teamTotal": collectedData[1][i][x][2][1], "matchType": collectedData[2][i]}
                         oddIndex += 2
                         
                     }
-                    if(player[1] != undefined){
+                    if(collectedData[1][i][x][5][y*2] != undefined){
+
+                        console.log(JSON.stringify(player))
+                        const postResponse = await fetch('http://localhost:5000/updateDatabase', {
+                            method: 'POST',
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(player)
+                        })
+                        console.log(JSON.stringify(player))
                         
-                        theWindow = window.open( 
-                             "/" + player[0] + "/" + player[1].replace(" ", ".") + "/" + player[2].replace(" ", ".") + "/" + player[3] + "/" + player[4] + "/" + player[5] + "/" + player[6] + "/" + player[7] + "/" + player[8] + "/" + player[9] + "/" + player[10],
-                            '_blank' // <- This is what makes it open in a new window.
-                        );
-                        theWindow.close()
-                        playerCollection.push(player)
+                        
                     }
                     
                 }   
             }
         }
-        console.log(playerCollection)
     }
     async function fetchAsyncRiot (url) {
         let response = await fetch(url);
