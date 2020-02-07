@@ -40,6 +40,7 @@ class EsportsMatchStats(db.Model):
     deaths = db.Column(db.Integer)
     creepScore = db.Column(db.Integer)
     totalTeamKills = db.Column(db.Integer)
+    matchTime = db.Column(db.String(200))
     
 
 class User(db.Model):
@@ -76,9 +77,8 @@ def store_game_data():
         createEsportsUser(str(request.get_json()["playerName"]), teamID)
 
     user = getEsportsUser(request.get_json()["playerName"])
-    print(request.get_json()["playerName"], file=sys.stderr)
     updateTeamMatchWins(teamID, int(request.get_json()["matchWin"]))
-    createEsportsMatch(int(request.get_json()["gameID"]), user.playerID, str(request.get_json()["legend"]), int(request.get_json()["kills"]), int(request.get_json()["assists"]), int(request.get_json()["deaths"]), int(request.get_json()["creepScore"]), int(request.get_json()["teamTotal"]), int(request.get_json()["matchType"]))        
+    createEsportsMatch(int(request.get_json()["gameID"]), user.playerID, str(request.get_json()["legend"]), int(request.get_json()["kills"]), int(request.get_json()["assists"]), int(request.get_json()["deaths"]), int(request.get_json()["creepScore"]), int(request.get_json()["teamTotal"]), int(request.get_json()["matchType"]), str(request.get_json()["matchTime"]))        
 
     return render_template('index.html')
 
@@ -120,8 +120,8 @@ def updateTeamMatchWins(teamID, matchWin):
 def getEsportsMatch(gameID):
     matches = EsportsMatchStats.query.filter_by(gameID = gameID).all()
 
-def createEsportsMatch(gameID, playerID, legend, kills, assists, deaths, creepScore, totalTeamKills, matchType):
-    match = EsportsMatchStats(matchID = gameID, playerID = playerID, legend = legend, kills = kills, assists = assists, deaths = deaths, creepScore = creepScore, totalTeamKills = totalTeamKills, matchType = matchType)
+def createEsportsMatch(gameID, playerID, legend, kills, assists, deaths, creepScore, totalTeamKills, matchType, matchTime):
+    match = EsportsMatchStats(matchID = gameID, playerID = playerID, legend = legend, kills = kills, assists = assists, deaths = deaths, creepScore = creepScore, totalTeamKills = totalTeamKills, matchType = matchType, matchTime = matchTime)
     db.session.add(match)
     db.session.commit()
 
@@ -171,7 +171,6 @@ def calculatePlayerScore(kills, assists, deaths, creepScore, tripleKills, quadra
         flawless = 0
         if(deaths == 0):
             flawless = 5
-        
         killAssistBonus = int((kills + assists) / 10)
         playerScore = (kills*3 + assists*2) + creepScore*0.02 + killAssistBonus + tripleKills*2 + quadraKills*5 + pentaKills*10 - deaths*0.5
         return playerScore

@@ -28,9 +28,7 @@
     let esportsURL = "https://esports-api.lolesports.com/persisted/gw/getCompletedEvents?hl=en-US"
     let esportsMemberURL = "https://feed.lolesports.com/livestats/v1/window/"
     var collectedGameData = []
-    const monthNames = ["January", "February", "March", "April", "May", "June",
-                        "July", "August", "September", "October", "November", "December"
-    ];
+    
 
     async function getMatchID(){
         var matchID = String(document.getElementById("matchID").value).split("/")[6]
@@ -44,7 +42,6 @@
         console.log(collectedData)
         updateDataBase(collectedData)
         document.getElementById("loadingString").innerText = "Done"
-
         //swap()
     }
 
@@ -55,15 +52,21 @@
                 let teamA = true
                 let oddIndex = 1
                 for(var y = 0; y < collectedData[1][i][x].length; y++){
-                    if(teamA){
-                        player = {"gameID": collectedData[0][0][i][2], "playerName": collectedData[1][i][x][5][y*2], "teamName": collectedData[0][0][i][0].replace(" ", "."), "matchWin": collectedData[0][0][i][1], "legend": collectedData[1][i][x][5][oddIndex], "kills": collectedData[1][i][x][y][0], "assists": collectedData[1][i][x][y][2], "deaths": collectedData[1][i][x][y][1], "creepScore": collectedData[1][i][x][y][3], "teamTotal": collectedData[1][i][x][2][0], "matchType": collectedData[2][i]}
-                        oddIndex += 2
-                        
-                        if(y == collectedData[1][i][x].length-1){
+                    if(x == 1){
                             teamA = false
+                            
+                        }else{
+                            teamA = true
                         }
+                    if(teamA){
+                        player = {"gameID": collectedData[0][0][i][2], "playerName": collectedData[1][i][x][5][y*2], "teamName": collectedData[0][0][i][0].replace(" ", "."), "matchWin": collectedData[0][0][i][1], "legend": collectedData[1][i][x][5][oddIndex], "kills": collectedData[1][i][x][y][0], "assists": collectedData[1][i][x][y][2], "deaths": collectedData[1][i][x][y][1], "creepScore": collectedData[1][i][x][y][3], "teamTotal": collectedData[1][i][x][2][0], "matchType": collectedData[2][i], "matchTime": collectedData[3][i]}
+                        oddIndex += 2
+                        console.log("TEAM A")
+                        
                     }else{
-                        player = {"gameID": collectedData[0][1][i][2], "playerName": collectedData[1][i][x][5][y*2], "teamName": collectedData[0][1][i][0].replace(" ", "."), "matchWin": collectedData[0][1][i][1], "legend": collectedData[1][i][x][5][oddIndex], "kills": collectedData[1][i][x][y][0], "assists": collectedData[1][i][x][y][2], "deaths": collectedData[1][i][x][y][1], "creepScore": collectedData[1][i][x][y][3], "teamTotal": collectedData[1][i][x][2][1], "matchType": collectedData[2][i]}
+                        console.log("TEAM B")
+
+                        player = {"gameID": collectedData[0][1][i][2], "playerName": collectedData[1][i][x][5][y*2], "teamName": collectedData[0][1][i][0].replace(" ", "."), "matchWin": collectedData[0][1][i][1], "legend": collectedData[1][i][x][5][oddIndex], "kills": collectedData[1][i][x][y][0], "assists": collectedData[1][i][x][y][2], "deaths": collectedData[1][i][x][y][1], "creepScore": collectedData[1][i][x][y][3], "teamTotal": collectedData[1][i][x][2][1], "matchType": collectedData[2][i], "matchTime": collectedData[3][i]}
                         oddIndex += 2
                         
                     }
@@ -78,7 +81,7 @@
                             body: JSON.stringify(player)
                         })
                     }
-                }   
+                }
             }
         }
     }
@@ -116,6 +119,7 @@
                             }
                                         });
         let data = await response.json();
+        console.log(data)
         let teamA = []
         let teamB = []
         let teams = []
@@ -124,11 +128,13 @@
         let timeNow = new Date();
         let allGames = []
         let matchTypes = []
+        let matchTimes = []
         for(var i =0; i < data.data.schedule.events.length; i++){ 
             var leagueName = data.data.schedule.events[i].league.name
             var gameID = data.data.schedule.events[i].games[0].id
             if((leagueName == "LCS Academy" || leagueName == "LCS") && gameID != location){
                 let newStartTime = new Date(data.data.schedule.events[i].startTime);
+                matchTimes.push(data.data.schedule.events[i].startTime)
                 newStartTime.setSeconds((newStartTime.getSeconds() + ((timeNow - newStartTime) / 1000)));
                 newStartTime.setSeconds(((Math.floor(newStartTime.getSeconds() / 10)) * 10) - 30);
                 location = gameID
@@ -146,7 +152,7 @@
         teams.push(teamB)
         collectedGameData = [teams, allGames]
         console.log(data)
-        return [teams, allGames, matchTypes];
+        return [teams, allGames, matchTypes, matchTimes];
     }
 
     async function fetchAsyncEsportsMembers (url, gameID) {
