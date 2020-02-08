@@ -38,16 +38,17 @@
         //fetchAsyncRiot(url) 
         swap()
         var collectedData = await fetchAsyncEsports(urlEsports)        
-        document.getElementById("loadingString").innerText = "Updating Database"
         console.log(collectedData)
+        document.getElementById("loadingString").innerText = "Updating Database"
         updateDataBase(collectedData)
-        document.getElementById("loadingString").innerText = "Done"
-        //swap()
+        document.getElementById("loadingString").innerText = "Finished"
+
     }
 
     async function updateDataBase(collectedData){
         let playerCollection = []
-        for(var i = 0; i < collectedData[1].length; i++){
+        if(collectedData[1].length > {{matchCount}}){
+            for(var i = 0; i < collectedData[1].length; i++){
             for(var x = 0; x < collectedData[1][i].length-1; x++){
                 let teamA = true
                 let oddIndex = 1
@@ -59,19 +60,14 @@
                             teamA = true
                         }
                     if(teamA){
-                        player = {"gameID": collectedData[0][0][i][2], "playerName": collectedData[1][i][x][5][y*2], "teamName": collectedData[0][0][i][0].replace(" ", "."), "matchWin": collectedData[0][0][i][1], "legend": collectedData[1][i][x][5][oddIndex], "kills": collectedData[1][i][x][y][0], "assists": collectedData[1][i][x][y][2], "deaths": collectedData[1][i][x][y][1], "creepScore": collectedData[1][i][x][y][3], "teamTotal": collectedData[1][i][x][2][0], "matchType": collectedData[2][i], "matchTime": collectedData[3][i]}
+                        player = {"gameID": collectedData[0][0][i][2], "playerName": collectedData[1][i][x][5][y*2], "teamName": collectedData[0][0][i][0].replace(" ", "."), "matchWin": collectedData[0][0][i][1], "legend": collectedData[1][i][x][5][oddIndex], "kills": collectedData[1][i][x][y][0], "assists": collectedData[1][i][x][y][2], "deaths": collectedData[1][i][x][y][1], "creepScore": collectedData[1][i][x][y][3], "teamTotal": collectedData[1][i][x][2][0], "matchType": collectedData[2][i], "matchTime": collectedData[3][i], "teamA": collectedData[0][0][i][0].replace(" ", "."), "teamB": collectedData[0][1][i][0].replace(" ", "."), "teamAWin": collectedData[0][0][i][1], "teamBWin": collectedData[0][1][i][1]}
                         oddIndex += 2
-                        console.log("TEAM A")
-                        
                     }else{
-                        console.log("TEAM B")
-
-                        player = {"gameID": collectedData[0][1][i][2], "playerName": collectedData[1][i][x][5][y*2], "teamName": collectedData[0][1][i][0].replace(" ", "."), "matchWin": collectedData[0][1][i][1], "legend": collectedData[1][i][x][5][oddIndex], "kills": collectedData[1][i][x][y][0], "assists": collectedData[1][i][x][y][2], "deaths": collectedData[1][i][x][y][1], "creepScore": collectedData[1][i][x][y][3], "teamTotal": collectedData[1][i][x][2][1], "matchType": collectedData[2][i], "matchTime": collectedData[3][i]}
+                        player = {"gameID": collectedData[0][1][i][2], "playerName": collectedData[1][i][x][5][y*2], "teamName": collectedData[0][1][i][0].replace(" ", "."), "matchWin": collectedData[0][1][i][1], "legend": collectedData[1][i][x][5][oddIndex], "kills": collectedData[1][i][x][y][0], "assists": collectedData[1][i][x][y][2], "deaths": collectedData[1][i][x][y][1], "creepScore": collectedData[1][i][x][y][3], "teamTotal": collectedData[1][i][x][2][1], "matchType": collectedData[2][i], "matchTime": collectedData[3][i], "teamA": collectedData[0][0][i][0].replace(" ", "."), "teamB": collectedData[0][1][i][0].replace(" ", "."), "teamAWin": collectedData[0][0][i][1], "teamBWin": collectedData[0][1][i][1]}
                         oddIndex += 2
                         
                     }
-                    if(collectedData[1][i][x][5][y*2] != undefined){
-
+                    if(collectedData[1][i][x][5][y*2] != undefined || collectedData[1][i][x][5][y*2] != ""){
                         const postResponse = await fetch('http://localhost:5000/updateDatabase', {
                             method: 'POST',
                             headers: {
@@ -84,6 +80,8 @@
                 }
             }
         }
+        }
+        
     }
     async function fetchAsyncRiot (url) {
         let response = await fetch(url);
@@ -129,23 +127,29 @@
         let allGames = []
         let matchTypes = []
         let matchTimes = []
+        
         for(var i =0; i < data.data.schedule.events.length; i++){ 
             var leagueName = data.data.schedule.events[i].league.name
             var gameID = data.data.schedule.events[i].games[0].id
-            if((leagueName == "LCS Academy" || leagueName == "LCS") && gameID != location){
-                let newStartTime = new Date(data.data.schedule.events[i].startTime);
-                matchTimes.push(data.data.schedule.events[i].startTime)
-                newStartTime.setSeconds((newStartTime.getSeconds() + ((timeNow - newStartTime) / 1000)));
-                newStartTime.setSeconds(((Math.floor(newStartTime.getSeconds() / 10)) * 10) - 30);
-                location = gameID
-                teamA.push([data.data.schedule.events[i].match.teams[0].name.replace(" ", "."), String(data.data.schedule.events[i].match.teams[0].result.gameWins), gameID])
-                teamB.push([data.data.schedule.events[i].match.teams[1].name.replace(" ", "."), String(data.data.schedule.events[i].match.teams[1].result.gameWins), gameID])
-                allGames.push(memberData = await fetchAsyncEsportsMembers(esportsMemberURL + gameID + "?startingTime=" + newStartTime.toISOString(), gameID ))
-                if(leagueName == "LCS Academy"){
-                    matchTypes.push(0)
-                }else{
-                    matchTypes.push(1)
+            if((leagueName == "LCS Academy" || leagueName == "LCS") && gameID != location ){
+                start = true
+                
+                if(start){
+                    let newStartTime = new Date(data.data.schedule.events[i].startTime);
+                    matchTimes.push(data.data.schedule.events[i].startTime)
+                    newStartTime.setSeconds((newStartTime.getSeconds() + ((timeNow - newStartTime) / 1000)));
+                    newStartTime.setSeconds(((Math.floor(newStartTime.getSeconds() / 10)) * 10) - 30);
+                    location = gameID
+                    teamA.push([data.data.schedule.events[i].match.teams[0].name.replace(" ", "."), String(data.data.schedule.events[i].match.teams[0].result.gameWins), gameID])
+                    teamB.push([data.data.schedule.events[i].match.teams[1].name.replace(" ", "."), String(data.data.schedule.events[i].match.teams[1].result.gameWins), gameID])
+                    allGames.push(memberData = await fetchAsyncEsportsMembers(esportsMemberURL + gameID + "?startingTime=" + newStartTime.toISOString(), gameID ))
+                    if(leagueName == "LCS Academy"){
+                        matchTypes.push(0)
+                    }else{
+                        matchTypes.push(1)
+                    }
                 }
+                
             }
         }
         teams.push(teamA)
@@ -227,16 +231,40 @@
             </div>
 
     </div>
-    <div class="Mid">
-        <div class="Left">
+    <div class="Mid" style="width: 100%;">
+        <div class="Left" style="float: left;">
+                
+                {% for team in allTeams: %}
+                    <ul id="teams">
+                        <li>teamID: {{ team.teamID }}</li>
+                        <li>teamName: {{ team.teamName }}</li>
+                        <li>gamesWon: {{ team.gamesWon / 5 }}</li>
+                        <li>gamesPlayed: {{ team.gamesPlayed / 5}}</li>
+                    </ul>
+                {% endfor %}
 
         </div>
-    <div class="Center">
-
-    </div>
-    <div class="Right">
-
-    </div>
+        <div class="Center" style="float: right;">
+                
+                {% for team in allTeamPlayers: %}
+                <ul id="teamMembers">
+                    {% for member in team: %}
+                        <li>playerName: {{ member.playerName }}</li>
+                    {% endfor %} 
+                </ul>   
+                {% endfor %}
+                
+        </div>
+        <div class="Right" style="margin-left: 30rem;">
+            {% for matches in allMatches: %}
+                <ul id="teams">
+                    <li>matchID: {{ matches.matchID }}</li>
+                    <li>gameID: {{ matches.gameID }}</li>
+                    <li>teamA: {{ matches.teamA }}</li>
+                    <li>teamB: {{ matches.teamB }}</li>
+                </ul>
+            {% endfor %}
+        </div>
 </div>
 
 {% endblock %}
