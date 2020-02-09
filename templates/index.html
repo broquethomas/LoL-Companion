@@ -21,12 +21,16 @@
 
 {% block body %}
 <script>
-    
+    //API KEYS
     let apiKey = "?api_key=RGAPI-1242c3c9-9587-476b-b81e-caa5271ef701"
     let apiKeyEsports = "?api_key=0TvQnueqKa5mxJntVWt0w4LpLfEkrV1Ta8rQBb9Z"
+
+    //API URLS
     let matchURL = "https://na1.api.riotgames.com/lol/match/v4/matches/"
     let esportsURL = "https://esports-api.lolesports.com/persisted/gw/getCompletedEvents?hl=en-US"
     let esportsMemberURL = "https://feed.lolesports.com/livestats/v1/window/"
+    
+    //All Data Collected
     var collectedGameData = []
     
 
@@ -42,7 +46,6 @@
         document.getElementById("loadingString").innerText = "Updating Database"
         updateDataBase(collectedData)
         document.getElementById("loadingString").innerText = "Finished"
-
     }
 
     async function updateDataBase(collectedData){
@@ -60,14 +63,14 @@
                             teamA = true
                         }
                     if(teamA){
-                        player = {"gameID": collectedData[0][0][i][2], "playerName": collectedData[1][i][x][5][y*2], "teamName": collectedData[0][0][i][0].replace(" ", "."), "matchWin": collectedData[0][0][i][1], "legend": collectedData[1][i][x][5][oddIndex], "kills": collectedData[1][i][x][y][0], "assists": collectedData[1][i][x][y][2], "deaths": collectedData[1][i][x][y][1], "creepScore": collectedData[1][i][x][y][3], "teamTotal": collectedData[1][i][x][2][0], "matchType": collectedData[2][i], "matchTime": collectedData[3][i], "teamA": collectedData[0][0][i][0].replace(" ", "."), "teamB": collectedData[0][1][i][0].replace(" ", "."), "teamAWin": collectedData[0][0][i][1], "teamBWin": collectedData[0][1][i][1]}
+                        player = {"gameID": collectedData[0][0][i][2], "playerName": collectedData[1][i][x][5][y*2], "teamName": collectedData[0][0][i][0].replace(" ", "."), "matchWin": collectedData[0][0][i][1], "legend": collectedData[1][i][x][5][oddIndex], "kills": collectedData[1][i][x][y][0], "assists": collectedData[1][i][x][y][2], "deaths": collectedData[1][i][x][y][1], "creepScore": collectedData[1][i][x][y][3], "teamTotal": collectedData[1][i][x][2][0], "matchType": collectedData[2][i], "matchTime": collectedData[3][i], "teamA": collectedData[0][0][i][0].replace(" ", "."), "teamB": collectedData[0][1][i][0].replace(" ", "."), "teamAWin": collectedData[0][0][i][1], "teamBWin": collectedData[0][1][i][1], "playerTeam": 0}
                         oddIndex += 2
                     }else{
-                        player = {"gameID": collectedData[0][1][i][2], "playerName": collectedData[1][i][x][5][y*2], "teamName": collectedData[0][1][i][0].replace(" ", "."), "matchWin": collectedData[0][1][i][1], "legend": collectedData[1][i][x][5][oddIndex], "kills": collectedData[1][i][x][y][0], "assists": collectedData[1][i][x][y][2], "deaths": collectedData[1][i][x][y][1], "creepScore": collectedData[1][i][x][y][3], "teamTotal": collectedData[1][i][x][2][1], "matchType": collectedData[2][i], "matchTime": collectedData[3][i], "teamA": collectedData[0][0][i][0].replace(" ", "."), "teamB": collectedData[0][1][i][0].replace(" ", "."), "teamAWin": collectedData[0][0][i][1], "teamBWin": collectedData[0][1][i][1]}
+                        player = {"gameID": collectedData[0][1][i][2], "playerName": collectedData[1][i][x][5][y*2], "teamName": collectedData[0][1][i][0].replace(" ", "."), "matchWin": collectedData[0][1][i][1], "legend": collectedData[1][i][x][5][oddIndex], "kills": collectedData[1][i][x][y][0], "assists": collectedData[1][i][x][y][2], "deaths": collectedData[1][i][x][y][1], "creepScore": collectedData[1][i][x][y][3], "teamTotal": collectedData[1][i][x][2][1], "matchType": collectedData[2][i], "matchTime": collectedData[3][i], "teamA": collectedData[0][0][i][0].replace(" ", "."), "teamB": collectedData[0][1][i][0].replace(" ", "."), "teamAWin": collectedData[0][0][i][1], "teamBWin": collectedData[0][1][i][1], "playerTeam": 1}
                         oddIndex += 2
                         
                     }
-                    if(collectedData[1][i][x][5][y*2] != undefined || collectedData[1][i][x][5][y*2] != ""){
+                    if(collectedData[1][i][x][5][y*2] != undefined && collectedData[1][i][x][5][y*2] != ""){
                         const postResponse = await fetch('http://localhost:5000/updateDatabase', {
                             method: 'POST',
                             headers: {
@@ -81,7 +84,7 @@
             }
         }
         }
-        
+        return true
     }
     async function fetchAsyncRiot (url) {
         let response = await fetch(url);
@@ -110,6 +113,13 @@
         return data;
     }
 
+    function timeHelper(time){
+        timeSplit = time.split("-")
+        newTime = timeSplit[2].substring(0, 2) + "-" + timeSplit[1] + "-" + timeSplit[0]
+        console.log(newTime)
+        return newTime
+    }
+
     async function fetchAsyncEsports (url) {
         let response = await fetch(url, {
                             headers: {
@@ -127,16 +137,19 @@
         let allGames = []
         let matchTypes = []
         let matchTimes = []
-        
+        let start = true
         for(var i =0; i < data.data.schedule.events.length; i++){ 
             var leagueName = data.data.schedule.events[i].league.name
             var gameID = data.data.schedule.events[i].games[0].id
             if((leagueName == "LCS Academy" || leagueName == "LCS") && gameID != location ){
-                start = true
-                
                 if(start){
+                    if(gameID == "103462440145619631"){
+                        
+                    }
                     let newStartTime = new Date(data.data.schedule.events[i].startTime);
-                    matchTimes.push(data.data.schedule.events[i].startTime)
+                    let timeSplit = String(data.data.schedule.events[i].startTime).split("-")
+                    newTime = timeSplit[2].substring(0, 2) + "-" + timeSplit[1] + "-" + timeSplit[0]
+                    matchTimes.push(newTime)
                     newStartTime.setSeconds((newStartTime.getSeconds() + ((timeNow - newStartTime) / 1000)));
                     newStartTime.setSeconds(((Math.floor(newStartTime.getSeconds() / 10)) * 10) - 30);
                     location = gameID
@@ -166,6 +179,7 @@
                             }
                     });
         let data = await response.json();
+        
         let playerName, playerKills, playerAssists, playerCreepScore, playerTripleKills, playerQuadraKills, playerPentaKills
         
         let teamA = []
@@ -205,6 +219,10 @@
         teamBMembers.push(teamB)
         teamKills = [teamAKills, teamBKills]
         var matchMembers = [teamAMembers, teamBMembers, teamKills]
+        if(gameID == "103462440145619632"){
+            console.log(data)
+            console.log(matchMembers)
+        }
         return matchMembers
     }
 
@@ -218,53 +236,57 @@
     }
 
 </script>
-<div class="MainContainer">
-    <span><h1>League Of Legends Fantasy League Companion</h1></span>
-    
-        MatchID URL: <input style="width: 20rem;" type="text" name="matchID" id="matchID"><br>
-        <input type="submit" value="Pull Match Data" onclick="getMatchID()">
-
-    <div class="Top">
+<div class="MainContainer" >
+    <h1>League Of Legends Fantasy League Companion</h1>
+    <div class="Top" style="width: 100%;">
+            MatchID URL: <input style="width: 20rem;" type="text" name="matchID" id="matchID">
+            <br>
+            <input type="submit" value="Update Database" onclick="getMatchID()">
         <br><br>
             <div style="display: none;" class="loader" id="loader">
                 <h1 id="loadingString">Collecting Data</h1>
             </div>
-
     </div>
-    <div class="Mid" style="width: 100%;">
-        <div class="Left" style="float: left;">
-                
-                {% for team in allTeams: %}
-                    <ul id="teams">
-                        <li>teamID: {{ team.teamID }}</li>
-                        <li>teamName: {{ team.teamName }}</li>
-                        <li>gamesWon: {{ team.gamesWon / 5 }}</li>
-                        <li>gamesPlayed: {{ team.gamesPlayed / 5}}</li>
-                    </ul>
+    <div class="LCS">
+        
+            {% for schedule in sortedLCSMatches[0] %}
+                <div class="Schedule DropDown">
+                    <span>
+                            <h1>{{schedule[0].matchTime}}</h1>
+                            <h3>Games Played: {{schedule|length}}</h1>
+                            <h3>Teams Participated: {{schedule|length * 2}}</h1>
+                            <h3>Organization: LCS</h1>
+                    </span>
+                    
+                {% set outer_loop = loop %}
+                {% for matches in schedule %}
+                    <div>
+                        <h1>{{matches.teamA}} vs {{matches.teamB}}</h1>
+                        <span>
+                            <h3 style="display: inline;">{{matches.teamA}} Points - </h3>
+                            {% for players in sortedLCSMatches[1][outer_loop.index0][loop.index0] %}
+                                {% if loop.index0 < 5 %}
+                                <h4 style="display: inline;">{{players.playerName}} : </h4>
+                                {% endif %}                                
+                            {% endfor %}
+                        </span>
+                        <br>
+                        <span>
+                                <h3 style="display: inline;">{{matches.teamB}} Points - </h3>
+                                {% for players in sortedLCSMatches[1][outer_loop.index0][loop.index0] %}
+                                    {% if loop.index0 > 4 %}
+                                    <h4 style="display: inline;">{{players.playerName}} : </h4>
+                                    {% endif %}                                
+                                {% endfor %}
+                            </span>
+                    </div>
                 {% endfor %}
-
-        </div>
-        <div class="Center" style="float: right;">
-                
-                {% for team in allTeamPlayers: %}
-                <ul id="teamMembers">
-                    {% for member in team: %}
-                        <li>playerName: {{ member.playerName }}</li>
-                    {% endfor %} 
-                </ul>   
-                {% endfor %}
-                
-        </div>
-        <div class="Right" style="margin-left: 30rem;">
-            {% for matches in allMatches: %}
-                <ul id="teams">
-                    <li>matchID: {{ matches.matchID }}</li>
-                    <li>gameID: {{ matches.gameID }}</li>
-                    <li>teamA: {{ matches.teamA }}</li>
-                    <li>teamB: {{ matches.teamB }}</li>
-                </ul>
+                </div>
             {% endfor %}
-        </div>
+    </div>
+    <br><br><br>
+    
+        
 </div>
 
 {% endblock %}
