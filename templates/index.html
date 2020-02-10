@@ -54,6 +54,43 @@
             transition: max-height 0.2s ease-out;
             background-color: rgba(255, 255, 255, 1.00);
         }
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
 </style>
 
 {% endblock %}
@@ -63,6 +100,11 @@
     //API KEYS
     window.onload = function(e){ 
         console.log("here")
+        let modal = document.getElementById("myModal");
+        let span = document.getElementsByClassName("close")[0];
+        if (e.target == modal) {
+            modal.style.display = "none";
+        }
         showMatches() 
     }
     let apiKey = "?api_key=RGAPI-1242c3c9-9587-476b-b81e-caa5271ef701"
@@ -75,6 +117,7 @@
     
     //All Data Collected
     var collectedGameData = []
+    let matchLocation = []
     
 
     async function getMatchID(){
@@ -281,6 +324,22 @@
         } 
     }
 
+    function openModal(location){
+        matchLocation = [location[0], location[1]]
+        let modal = document.getElementById("myModal");
+        let span = document.getElementsByClassName("close")[0];
+        modal.style.display = "block";
+        console.log(location)
+    }
+
+    function closeModal(){
+        let modal = document.getElementById("myModal");
+        modal.style.display = "none";
+
+    }
+
+    
+
     function showMatches(){
         var coll = document.getElementsByClassName("collapsible");
         var i;
@@ -308,7 +367,17 @@
                 <h1 id="loadingString">Collecting Data</h1>
             </div>
     </div>
-    <div class="LCS">
+    <div id="myModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close" onClick="closeModal()">&times;</span>
+                <p>Some text in the Modal..</p>
+            </div>
+          
+    </div>
+          
+    <div class="LCS" style="width: 90%; height: 90%; margin: 0 auto;">
         <div class="Schedule">
             {% for schedule in sortedLCSMatches[0] %}
                 <div class="collapsible" >
@@ -316,33 +385,34 @@
                     <h1 style="color: rgba(85, 115, 249, 1.00); font-size: 3rem; padding: 0px; font-family: 'Work Sans', sans-serif; margin: 0px;">{{schedule[0].matchTime}}</h1>
                     <h3 style="display: inline; padding-right: 2rem; color: rgba(111, 111, 111, 1.00); font-size: 1.25rem; margin: 0px;">Games Played: <p style="display: inline; color: black;"><b>{{schedule|length}}</b> </p>   </h1>
                     <h3 style="display: inline; padding-right: 2rem; color: rgba(111, 111, 111, 1.00); font-size: 1.25rem; margin: 0px;">Teams Participated: <p style="display: inline; color: black;"><b>{{schedule|length * 2}}</b></p>   </h1>
-                    <h3 style="display: inline; color: rgba(111, 111, 111, 1.00); font-size: 1.25rem;">Organization: <p style="display: inline; color: black;"><b>LCS</b></p>    </h1>
+                    <h3 style="display: inline; color: rgba(111, 111, 111, 1.00); font-size: 1.25rem;">Organization: <p style="display: inline; color: black;"><b>LCS</b></p></h1>
     
                 </div>
                     {% set outer_loop = loop %}
-                    <div class="content"> 
+                    <div style="width: 90%; height: 90%; margin: 0 auto;" class="content"> 
                     {% for matches in schedule %}
                          
-                            <h1 style="color: cornflowerblue;">{{matches.teamA}} vs {{matches.teamB}}</h1>
-                            <div>
-                                <h3 style="display: inline;"><u><b>{{matches.teamA}}</b> </u>Pts - </h3>
+                    <h1 style="color: cornflowerblue;">{{matches.teamA}} vs {{matches.teamB}}</h1>
+
+                            <div style="background-color: rgba(125, 125, 125, 1.00); height: 2.5rem; line-height: 2.5rem; border-radius: .5rem; padding-left: .5rem;" id="{{matches.gameID}}" onclick="openModal([{{outer_loop.index0}}, {{loop.index0}}, 0]) ">
+                                <h3 style="display: inline;"><u><b>{{matches.teamA}}</b></u>Pts - </h3>
                                 {% for players in sortedLCSMatches[1][outer_loop.index0][loop.index0] %}
                                     {% if loop.index0 < 5 %}
                                         <span>
-                                            <h4 style="display: inline;">{{players.playerName}}: </h4>
-                                            <h4 style="display: inline; color: rgba(158, 208, 173, 1.00)"> {{players.playerScore}} </h4> 
+                                            <h4 style="display: inline; padding-left: 1rem;">{{players.playerName}}: </h4>
+                                            <h4 style="display: inline; color: rgba(158, 208, 173, 1.00);"> {{players.playerScore}} </h4> 
                                         </span>
                                     {% endif %}                                
                                 {% endfor %}
                             </div>
                             <br>
-                            <div>
+                            <div style="background-color: rgba(125, 125, 125, 1.00); height: 2.5rem; line-height: 2.5rem; border-radius: .5rem; padding-left: .5rem;" id="{{matches.gameID}}" onclick="openModal([{{outer_loop.index0}}, {{loop.index0}}, 5])">
                                 <h3 style="display: inline;"><u><b>{{matches.teamB}}</b></u> Pts - </h3>
                                 {% for players in sortedLCSMatches[1][outer_loop.index0][loop.index0] %}
                                     {% if loop.index0 > 4 %}
                                         <span>
-                                            <h4 style="display: inline;">{{players.playerName}}: </h4>
-                                            <h4 style="display: inline;color: rgba(158, 208, 173, 1.00)"> {{players.playerScore}} </h4> 
+                                            <h4 style="display: inline; padding-left: 1rem;">{{players.playerName}}: </h4>
+                                            <h4 style="display: inline; color: rgba(158, 208, 173, 1.00);"> {{players.playerScore}} </h4> 
                                         </span>
                                     {% endif %}   
                                 {% endfor %}
