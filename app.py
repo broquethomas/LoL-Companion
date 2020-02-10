@@ -136,7 +136,8 @@ def index():
                 innerBuildArray.append(matches)
                 innerStatsBuildArray.append(lcsMatchStats[count])
         count += 1
-    
+    buildArray.append(innerBuildArray)
+    statsBuildArray.append(innerStatsBuildArray)
     sortedLCSMatches = [buildArray, statsBuildArray]
     print(statsBuildArray, file=sys.stderr);
     previous = ""
@@ -165,6 +166,9 @@ def index():
                 innerBuildArray.append(matches)
                 innerStatsBuildArray.append(lcsAcademyMatchStats[count])
         count += 1
+        
+    buildArray.append(innerBuildArray)
+    statsBuildArray.append(innerStatsBuildArray)
     sortedLCSAcademyMatches = [buildArray, statsBuildArray]
     
 

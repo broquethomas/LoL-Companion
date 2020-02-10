@@ -121,6 +121,7 @@
     
 
     async function getMatchID(){
+        console.log({{matchCount}})
         var matchID = String(document.getElementById("matchID").value).split("/")[6]
         var url = matchURL + matchID + apiKey
         var urlEsports = esportsURL
