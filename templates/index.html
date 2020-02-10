@@ -377,7 +377,7 @@
           
     </div>
           
-    <div class="LCS" style="width: 90%; height: 90%; margin: 0 auto;">
+    <div class="LCS" style="width: 90%; height: fit-content; margin: 0 auto;">
         <div class="Schedule">
             {% for schedule in sortedLCSMatches[0] %}
                 <div class="collapsible">
@@ -389,7 +389,7 @@
     
                 </div>
                     {% set outer_loop = loop %}
-                    <div style="width: 90%; height: 90%; margin: 0 auto;" class="content"> 
+                    <div style="width: 90%; height: fit-content; margin: 0 auto;" class="content"> 
                     {% for matches in schedule %}
                          
                     <h1 style="color: cornflowerblue;">{{matches.teamA}} vs {{matches.teamB}}</h1>
@@ -450,6 +450,8 @@
                             <br>
                             <hr> 
                     {% endfor %}
+                    <br><br><br><br><br><br><br><br><br><br><br>
+                    <br><br><br><br><br><br><br><br><br><br><br>
                 </div>
                 <br><br>
             {% endfor %}
