@@ -368,7 +368,7 @@
     <div class="Top" style="width: 100%; background-color: rgba(85, 115, 249, 1.00); margin: 0px;">
             <h1>League Of Legends Fantasy League Companion</h1>
             MatchID URL: <input style="width: 20rem;" type="text" name="matchID" id="matchID">
-            <input style="display: inline;" type="submit" value="Update Database" onclick="switchMatches()">
+            <input style="display: inline;" type="submit" value="Update Database" onclick="getMatchID()">
             <input style="float: right;" type="submit" value="Swap LCS / Academy" onclick="switchMatches()">
 
             <br><br>
@@ -407,14 +407,19 @@
 
                             <div class="collapsible" style="background-color: rgba(125, 125, 125, 1.00);  line-height: 1rem; border-radius: .5rem; padding-left: .5rem;" id="{{matches.gameID}}" onclick="openModal([{{outer_loop.index0}}, {{loop.index0}}, 0]) ">
                                 <h3 style="display: inline; color: black;"><u><b>{{matches.teamA}}</b></u>Pts - </h3>
+                                {% set count = namespace(value=0) %}
                                 {% for players in sortedLCSMatches[1][outer_loop.index0][loop.index0] %}
                                     {% if loop.index0 < 5 %}
+                                        {% set count.value = count.value + players.playerScore %}
+
                                         <span>
                                             <h4 style="display: inline; padding-left: 1rem; color: black;">{{players.playerName}}: </h4>
                                             <h4 style="display: inline; color: rgba(158, 208, 173, 1.00);"> {{players.playerScore}} </h4> 
                                         </span>
                                     {% endif %}                                
                                 {% endfor %}
+                                <h4 style="display: inline; padding-left: 1rem; color: black;">Total: </h4>
+                                <h4 style="display: inline; color: rgba(158, 208, 173, 1.00);"> {{count.value|round(1, 'floor')}} </h4> 
                                 <br>
                             </div>
     
@@ -437,14 +442,20 @@
                             <br>
                             <div class="collapsible" style="background-color: rgba(125, 125, 125, 1.00);  line-height: 1rem; border-radius: .5rem; padding-left: .5rem;" id="{{matches.gameID}}" onclick="openModal([{{outer_loop.index0}}, {{loop.index0}}, 5])">
                                 <h3 style="display: inline; color: black;"><u><b>{{matches.teamB}}</b></u> Pts - </h3>
+                                {% set count = namespace(value=0) %}
+
                                 {% for players in sortedLCSMatches[1][outer_loop.index0][loop.index0] %}
                                     {% if loop.index0 > 4 %}
+                                    {% set count.value = count.value + players.playerScore %}
+
                                         <span>
                                             <h4 style="display: inline; padding-left: 1rem; color: black;">{{players.playerName}}: </h4>
                                             <h4 style="display: inline; color: rgba(158, 208, 173, 1.00);"> {{players.playerScore}} </h4> 
                                         </span>
                                     {% endif %}   
                                 {% endfor %}
+                                <h4 style="display: inline; padding-left: 1rem; color: black;">Total: </h4>
+                                <h4 style="display: inline; color: rgba(158, 208, 173, 1.00);"> {{count.value|round(1, 'floor')}} </h4> 
                             </div>
                             <div class="content" style="width: 90%; height: 90%; margin: 0 auto;">
                                     <h1 style="color: cornflowerblue;">GameID: {{matches.gameID}}</h1>
@@ -491,14 +502,20 @@
         
                                     <div class="collapsible" style="background-color: rgba(125, 125, 125, 1.00);  line-height: 1rem; border-radius: .5rem; padding-left: .5rem;" id="{{matches.gameID}}" onclick="openModal([{{outer_loop.index0}}, {{loop.index0}}, 0]) ">
                                         <h3 style="display: inline; color: black;"><u><b>{{matches.teamA}}</b></u>Pts - </h3>
+                                        {% set count = namespace(value=0) %}
+
                                         {% for players in sortedLCSAcademyMatches[1][outer_loop.index0][loop.index0] %}
                                             {% if loop.index0 < 5 %}
+                                            {% set count.value = count.value + players.playerScore %}
+
                                                 <span>
                                                     <h4 style="display: inline; padding-left: 1rem; color: black;">{{players.playerName}}: </h4>
                                                     <h4 style="display: inline; color: rgba(158, 208, 173, 1.00);"> {{players.playerScore}} </h4> 
                                                 </span>
                                             {% endif %}                                
                                         {% endfor %}
+                                        <h4 style="display: inline; padding-left: 1rem; color: black;">Total: </h4>
+                                <h4 style="display: inline; color: rgba(158, 208, 173, 1.00);"> {{count.value|round(1, 'floor')}} </h4>
                                         <br>
                                     </div>
             
@@ -521,16 +538,21 @@
                                     <br>
                                     <div class="collapsible" style="background-color: rgba(125, 125, 125, 1.00);  line-height: 1rem; border-radius: .5rem; padding-left: .5rem;" id="{{matches.gameID}}" onclick="openModal([{{outer_loop.index0}}, {{loop.index0}}, 5])">
                                         <h3 style="display: inline; color: black;"><u><b>{{matches.teamB}}</b></u> Pts - </h3>
+                                        {% set count = namespace(value=0) %}
+
                                         {% for players in sortedLCSAcademyMatches[1][outer_loop.index0][loop.index0] %}
                                             
                                             {% if loop.index0 > 4 %}
+                                            {% set count.value = count.value + players.playerScore %}
+
                                                 <span>
                                                     <h4 style="display: inline; padding-left: 1rem; color: black;">{{players.playerName}}: </h4>
                                                     <h4 style="display: inline; color: rgba(158, 208, 173, 1.00);"> {{players.playerScore}} </h4> 
                                                 </span>
                                             {% endif %}   
                                         {% endfor %}
-                                        <h4 style="display: inline; color: rgba(158, 208, 173, 1.00);"> Total: {{totalScore}} </h4> 
+                                        <h4 style="display: inline; padding-left: 1rem; color: black;">Total: </h4>
+                                        <h4 style="display: inline; color: rgba(158, 208, 173, 1.00);"> {{count.value|round(1, 'floor')}} </h4>
                                     </div>
                                     <div class="content" style="width: 90%; height: 90%; margin: 0 auto;">
                                             <h1 style="color: cornflowerblue;">GameID: {{matches.gameID}}</h1>
