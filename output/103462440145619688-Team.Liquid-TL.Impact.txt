@@ -1,0 +1,1 @@
+{'gameID': '103462440145619688', 'playerName': 'TL.Impact', 'teamName': 'Team.Liquid', 'matchWin': '0', 'legend': 'Aatrox', 'kills': 0, 'assists': 7, 'deaths': 2, 'creepScore': 425, 'teamTotal': 1, 'matchType': 1, 'matchTime': '01-02-2020', 'teamA': 'Dignitas', 'teamB': 'Team.Liquid', 'teamAWin': '1', 'teamBWin': '0', 'playerTeam': 1}<EsportsMatchStats 103462440145619688, 56, 1>

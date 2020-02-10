@@ -71,6 +71,9 @@
                         
                     }
                     if(collectedData[1][i][x][5][y*2] != undefined && collectedData[1][i][x][5][y*2] != ""){
+                        if(String(player.gameID) == "103462440145619632" && player.playerName == "DIG.aphromoo"){
+                            console.log(player)
+                        }
                         const postResponse = await fetch('http://localhost:5000/updateDatabase', {
                             method: 'POST',
                             headers: {
@@ -266,19 +269,19 @@
                             <h3 style="display: inline;">{{matches.teamA}} Points - </h3>
                             {% for players in sortedLCSMatches[1][outer_loop.index0][loop.index0] %}
                                 {% if loop.index0 < 5 %}
-                                <h4 style="display: inline;">{{players.playerName}} : </h4>
+                                <h4 style="display: inline;">{{players.playerName}} : {{players.playerScore}}</h4>
                                 {% endif %}                                
                             {% endfor %}
                         </span>
                         <br>
                         <span>
-                                <h3 style="display: inline;">{{matches.teamB}} Points - </h3>
-                                {% for players in sortedLCSMatches[1][outer_loop.index0][loop.index0] %}
-                                    {% if loop.index0 > 4 %}
-                                    <h4 style="display: inline;">{{players.playerName}} : </h4>
-                                    {% endif %}                                
-                                {% endfor %}
-                            </span>
+                            <h3 style="display: inline;">{{matches.teamB}} Points - </h3>
+                            {% for players in sortedLCSMatches[1][outer_loop.index0][loop.index0] %}
+                                {% if loop.index0 > 4 %}
+                                <h4 style="display: inline;">{{players.playerName}} : {{players.playerScore}} </h4>
+                                {% endif %}                                
+                            {% endfor %}
+                        </span>
                     </div>
                 {% endfor %}
                 </div>

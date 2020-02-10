@@ -1,0 +1,1 @@
+{'gameID': '103462440145619662', 'playerName': 'DIG.Grig', 'teamName': 'Dignitas', 'matchWin': '0', 'legend': 'RekSai', 'kills': 7, 'assists': 6, 'deaths': 1, 'creepScore': 179, 'teamTotal': 6, 'matchType': 1, 'matchTime': '09-02-2020', 'teamA': 'Dignitas', 'teamB': 'Cloud9', 'teamAWin': '0', 'teamBWin': '1', 'playerTeam': 0}<EsportsMatchStats 103462440145619662, 67, 1>

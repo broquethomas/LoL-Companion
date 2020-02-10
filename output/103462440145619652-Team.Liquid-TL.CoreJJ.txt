@@ -1,0 +1,1 @@
+{'gameID': '103462440145619652', 'playerName': 'TL.CoreJJ', 'teamName': 'Team.Liquid', 'matchWin': '1', 'legend': 'Rakan', 'kills': 0, 'assists': 3, 'deaths': 3, 'creepScore': 43, 'teamTotal': 0, 'matchType': 1, 'matchTime': '28-01-2020', 'teamA': 'Team.Liquid', 'teamB': 'TSM', 'teamAWin': '1', 'teamBWin': '0', 'playerTeam': 0}<EsportsMatchStats 103462440145619652, 60, 1>

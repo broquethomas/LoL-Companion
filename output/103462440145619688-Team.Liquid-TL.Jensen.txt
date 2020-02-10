@@ -1,0 +1,1 @@
+{'gameID': '103462440145619688', 'playerName': 'TL.Jensen', 'teamName': 'Team.Liquid', 'matchWin': '0', 'legend': 'Ryze', 'kills': 6, 'assists': 6, 'deaths': 1, 'creepScore': 349, 'teamTotal': 1, 'matchType': 1, 'matchTime': '01-02-2020', 'teamA': 'Dignitas', 'teamB': 'Team.Liquid', 'teamAWin': '1', 'teamBWin': '0', 'playerTeam': 1}<EsportsMatchStats 103462440145619688, 58, 1>

@@ -1,0 +1,1 @@
+{'gameID': '103462440145619672', 'playerName': '100.Ssumday', 'teamName': '100.Thieves', 'matchWin': '0', 'legend': 'Aatrox', 'kills': 3, 'assists': 10, 'deaths': 1, 'creepScore': 289, 'teamTotal': 5, 'matchType': 1, 'matchTime': '02-02-2020', 'teamA': '100.Thieves', 'teamB': 'Cloud9', 'teamAWin': '0', 'teamBWin': '1', 'playerTeam': 0}<EsportsMatchStats 103462440145619672, 71, 1>

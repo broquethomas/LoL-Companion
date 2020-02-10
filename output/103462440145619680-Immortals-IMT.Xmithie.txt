@@ -1,0 +1,1 @@
+{'gameID': '103462440145619680', 'playerName': 'IMT.Xmithie', 'teamName': 'Immortals', 'matchWin': '0', 'legend': 'Trundle', 'kills': 4, 'assists': 12, 'deaths': 3, 'creepScore': 199, 'teamTotal': 5, 'matchType': 1, 'matchTime': '26-01-2020', 'teamA': 'Immortals', 'teamB': 'FlyQuest', 'teamAWin': '0', 'teamBWin': '1', 'playerTeam': 0}<EsportsMatchStats 103462440145619680, 82, 1>

@@ -1,0 +1,1 @@
+{'gameID': '103462440145619684', 'playerName': 'IMT.sOAZ', 'teamName': 'Immortals', 'matchWin': '1', 'legend': 'Chogath', 'kills': 0, 'assists': 3, 'deaths': 3, 'creepScore': 331, 'teamTotal': 2, 'matchType': 1, 'matchTime': '09-02-2020', 'teamA': 'Immortals', 'teamB': '100.Thieves', 'teamAWin': '1', 'teamBWin': '0', 'playerTeam': 0}<EsportsMatchStats 103462440145619684, 81, 1>

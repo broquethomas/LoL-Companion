@@ -1,0 +1,1 @@
+{'gameID': '103462440145619652', 'playerName': 'TL.Jensen', 'teamName': 'Team.Liquid', 'matchWin': '1', 'legend': 'Orianna', 'kills': 0, 'assists': 1, 'deaths': 2, 'creepScore': 299, 'teamTotal': 0, 'matchType': 1, 'matchTime': '28-01-2020', 'teamA': 'Team.Liquid', 'teamB': 'TSM', 'teamAWin': '1', 'teamBWin': '0', 'playerTeam': 0}<EsportsMatchStats 103462440145619652, 58, 1>

@@ -1,0 +1,1 @@
+{'gameID': '103462440145619646', 'playerName': 'TSM.Broken Blade', 'teamName': 'TSM', 'matchWin': '0', 'legend': 'Rumble', 'kills': 2, 'assists': 3, 'deaths': 2, 'creepScore': 369, 'teamTotal': 1, 'matchType': 1, 'matchTime': '26-01-2020', 'teamA': 'TSM', 'teamB': 'Immortals', 'teamAWin': '0', 'teamBWin': '1', 'playerTeam': 0}<EsportsMatchStats 103462440145619646, 94, 1>

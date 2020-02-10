@@ -4,6 +4,7 @@ from flask import request
 from datetime import datetime
 import sqlite3
 import sys
+
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_TRACK_MODIFCATIONS'] = False
@@ -136,6 +137,7 @@ def index():
                 innerStatsBuildArray.append(lcsMatchStats[count])
         count += 1
     sortedLCSMatches = [buildArray, statsBuildArray]
+    print(statsBuildArray, file=sys.stderr);
     previous = ""
     buildArray = []
     statsBuildArray = []
@@ -180,20 +182,27 @@ def index():
 
 @app.route('/updateDatabase', methods=['POST'])
 def store_game_data():
-    if (EsportsTeams.query.filter_by(teamName = str(request.get_json()["teamName"])).first() == None):
+    try:
+        request_obj = request.get_json()
 
-        createEsportsTeam(str(request.get_json()["teamName"]))
-    
-    teamID = int(getEsportsTeam(request.get_json()["teamName"]).teamID)
+        if (EsportsTeams.query.filter_by(teamName = str(request.get_json()["teamName"])).first() == None):
 
-    if (EsportsUser.query.filter_by(playerName = str(request.get_json()["playerName"])).first() == None):
-        createEsportsUser(str(request.get_json()["playerName"]), teamID)
+            createEsportsTeam(str(request.get_json()["teamName"]))
+        
+        teamID = int(getEsportsTeam(request.get_json()["teamName"]).teamID)
 
-    user = getEsportsUser(request.get_json()["playerName"])
-    updateTeamMatchWins(teamID, int(request.get_json()["matchWin"]))
-    createEsportsMatch(int(request.get_json()["gameID"]), user.playerID, str(request.get_json()["playerName"]), str(request.get_json()["legend"]), int(request.get_json()["kills"]), int(request.get_json()["assists"]), int(request.get_json()["deaths"]), int(request.get_json()["creepScore"]), int(request.get_json()["teamTotal"]), int(request.get_json()["matchType"]), str(request.get_json()["matchTime"]), str(request.get_json()["teamA"]), str(request.get_json()["teamB"]), int(request.get_json()["teamAWin"]), int(request.get_json()["teamBWin"]), int(request.get_json()["playerTeam"]))        
+        if (EsportsUser.query.filter_by(playerName = str(request.get_json()["playerName"])).first() == None):
+            createEsportsUser(str(request.get_json()["playerName"]), teamID)
 
-    return ('', 204)
+        user = getEsportsUser(request.get_json()["playerName"])
+        updateTeamMatchWins(teamID, int(request.get_json()["matchWin"]))
+        createEsportsMatch(int(request.get_json()["gameID"]), user.playerID, str(request.get_json()["playerName"]), str(request.get_json()["legend"]), int(request.get_json()["kills"]), int(request.get_json()["assists"]), int(request.get_json()["deaths"]), int(request.get_json()["creepScore"]), int(request.get_json()["teamTotal"]), int(request.get_json()["matchType"]), str(request.get_json()["matchTime"]), str(request.get_json()["teamA"]), str(request.get_json()["teamB"]), int(request.get_json()["teamAWin"]), int(request.get_json()["teamBWin"]), int(request.get_json()["playerTeam"]))        
+
+        
+        return ('', 204)
+    except Exception as e:
+        print(e)
+        return ('', 500)
 
 
 
@@ -222,7 +231,7 @@ def getEsportsMatch(gameID):
     matches = EsportsMatchStats.query.filter_by(gameID = gameID).all()
 
 def createEsportsMatch(gameID, playerID, playerName, legend, kills, assists, deaths, creepScore, totalTeamKills, matchType, matchTime, teamA, teamB, teamAWin, teamBWin, playerTeam):
-    matchStats = EsportsMatchStats(matchID = gameID, playerName = playerName, playerID = playerID, legend = legend, kills = kills, assists = assists, deaths = deaths, creepScore = creepScore, totalTeamKills = totalTeamKills, matchType = matchType, matchTime = matchTime, playerTeam = playerTeam, killParticipation = (totalTeamKills / (kills+assists)), playerScore = calculatePlayerScore(kills, assists, deaths, creepScore, totalTeamKills))
+    matchStats = EsportsMatchStats(matchID = gameID, playerName = playerName, playerID = playerID, legend = legend, kills = kills, assists = assists, deaths = deaths, creepScore = creepScore, totalTeamKills = totalTeamKills, matchType = matchType, matchTime = matchTime, playerTeam = playerTeam, killParticipation = (totalTeamKills / max(1, kills+assists)), playerScore = calculatePlayerScore(kills, assists, deaths, creepScore, totalTeamKills))
     if (EsportsMatch.query.filter_by(gameID = gameID).first() == None):
         match = EsportsMatch(gameID = gameID, teamA = teamA, teamB = teamB, matchTime = matchTime, teamAWin = teamAWin, teamBWin = teamBWin, matchType = matchType)
         db.session.add(match)
@@ -274,7 +283,7 @@ def calculatePlayerScore(kills, assists, deaths, creepScore, teamTotalKills):
         if(deaths == 0):
             flawless = 1
         killAssistBonus = int((kills + assists) / 10)
-        playerScore = (kills*3 + assists*2) + creepScore*0.02 + killAssistBonus + (teamTotalKills / (kills + assists))*0.25 + flawless*5 - deaths*0.5 
+        playerScore = (kills*3 + assists*2) + creepScore*0.02 + killAssistBonus + (teamTotalKills / max(1, (kills + assists)))*0.25 + flawless*5 - deaths*0.5 
         return round(playerScore, 2)
     
 if __name__ == "__main__":

@@ -1,0 +1,1 @@
+{'gameID': '103462440145619690', 'playerName': 'FLY.PowerOfEvil', 'teamName': 'FlyQuest', 'matchWin': '1', 'legend': 'Rumble', 'kills': 1, 'assists': 1, 'deaths': 3, 'creepScore': 265, 'teamTotal': 1, 'matchType': 1, 'matchTime': '04-02-2020', 'teamA': 'FlyQuest', 'teamB': 'Dignitas', 'teamAWin': '1', 'teamBWin': '0', 'playerTeam': 0}<EsportsMatchStats 103462440145619690, 88, 1>

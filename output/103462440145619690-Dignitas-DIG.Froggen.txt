@@ -1,0 +1,1 @@
+{'gameID': '103462440145619690', 'playerName': 'DIG.Froggen', 'teamName': 'Dignitas', 'matchWin': '0', 'legend': 'Ekko', 'kills': 9, 'assists': 5, 'deaths': 0, 'creepScore': 277, 'teamTotal': 0, 'matchType': 1, 'matchTime': '04-02-2020', 'teamA': 'FlyQuest', 'teamB': 'Dignitas', 'teamAWin': '1', 'teamBWin': '0', 'playerTeam': 1}<EsportsMatchStats 103462440145619690, 68, 1>

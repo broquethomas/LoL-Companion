@@ -1,0 +1,1 @@
+{'gameID': '103462440145619670', 'playerName': 'C9.Blaber', 'teamName': 'Cloud9', 'matchWin': '1', 'legend': 'LeeSin', 'kills': 2, 'assists': 2, 'deaths': 5, 'creepScore': 167, 'teamTotal': 3, 'matchType': 1, 'matchTime': '26-01-2020', 'teamA': 'Golden.Guardians', 'teamB': 'Cloud9', 'teamAWin': '0', 'teamBWin': '1', 'playerTeam': 1}<EsportsMatchStats 103462440145619670, 52, 1>

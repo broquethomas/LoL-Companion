@@ -1,0 +1,1 @@
+{'gameID': '103462440145619646', 'playerName': 'IMT.sOAZ', 'teamName': 'Immortals', 'matchWin': '1', 'legend': 'Aatrox', 'kills': 3, 'assists': 2, 'deaths': 2, 'creepScore': 384, 'teamTotal': 1, 'matchType': 1, 'matchTime': '26-01-2020', 'teamA': 'TSM', 'teamB': 'Immortals', 'teamAWin': '0', 'teamBWin': '1', 'playerTeam': 1}<EsportsMatchStats 103462440145619646, 81, 1>

@@ -1,0 +1,1 @@
+{'gameID': '103462440145619652', 'playerName': 'TSM.Dardoch', 'teamName': 'TSM', 'matchWin': '0', 'legend': 'Elise', 'kills': 0, 'assists': 7, 'deaths': 1, 'creepScore': 175, 'teamTotal': 0, 'matchType': 1, 'matchTime': '28-01-2020', 'teamA': 'Team.Liquid', 'teamB': 'TSM', 'teamAWin': '1', 'teamBWin': '0', 'playerTeam': 1}<EsportsMatchStats 103462440145619652, 95, 1>

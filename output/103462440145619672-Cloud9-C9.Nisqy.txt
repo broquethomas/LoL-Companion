@@ -1,0 +1,1 @@
+{'gameID': '103462440145619672', 'playerName': 'C9.Nisqy', 'teamName': 'Cloud9', 'matchWin': '1', 'legend': 'Morgana', 'kills': 1, 'assists': 2, 'deaths': 2, 'creepScore': 241, 'teamTotal': 2, 'matchType': 1, 'matchTime': '02-02-2020', 'teamA': '100.Thieves', 'teamB': 'Cloud9', 'teamAWin': '0', 'teamBWin': '1', 'playerTeam': 1}<EsportsMatchStats 103462440145619672, 53, 1>

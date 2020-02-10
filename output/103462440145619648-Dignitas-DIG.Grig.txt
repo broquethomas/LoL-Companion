@@ -1,0 +1,1 @@
+{'gameID': '103462440145619648', 'playerName': 'DIG.Grig', 'teamName': 'Dignitas', 'matchWin': '0', 'legend': 'Elise', 'kills': 3, 'assists': 6, 'deaths': 1, 'creepScore': 175, 'teamTotal': 0, 'matchType': 1, 'matchTime': '09-02-2020', 'teamA': 'TSM', 'teamB': 'Dignitas', 'teamAWin': '1', 'teamBWin': '0', 'playerTeam': 1}<EsportsMatchStats 103462440145619648, 67, 1>

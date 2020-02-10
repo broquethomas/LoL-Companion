@@ -1,0 +1,1 @@
+{'gameID': '103462440145619690', 'playerName': 'DIG.Huni', 'teamName': 'Dignitas', 'matchWin': '0', 'legend': 'Sett', 'kills': 3, 'assists': 11, 'deaths': 1, 'creepScore': 263, 'teamTotal': 0, 'matchType': 1, 'matchTime': '04-02-2020', 'teamA': 'FlyQuest', 'teamB': 'Dignitas', 'teamAWin': '1', 'teamBWin': '0', 'playerTeam': 1}<EsportsMatchStats 103462440145619690, 66, 1>

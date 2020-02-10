@@ -1,0 +1,1 @@
+{'gameID': '103462440145619666', 'playerName': 'C9.Zven', 'teamName': 'Cloud9', 'matchWin': '1', 'legend': 'Aphelios', 'kills': 0, 'assists': 2, 'deaths': 1, 'creepScore': 204, 'teamTotal': 0, 'matchType': 1, 'matchTime': '25-01-2020', 'teamA': 'Cloud9', 'teamB': 'Team.Liquid', 'teamAWin': '1', 'teamBWin': '0', 'playerTeam': 0}<EsportsMatchStats 103462440145619666, 54, 1>

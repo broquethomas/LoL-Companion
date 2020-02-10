@@ -1,0 +1,1 @@
+{'gameID': '103462440145619638', 'playerName': 'FLY.IgNar', 'teamName': 'FlyQuest', 'matchWin': '0', 'legend': 'Nautilus', 'kills': 2, 'assists': 12, 'deaths': 0, 'creepScore': 39, 'teamTotal': 5, 'matchType': 1, 'matchTime': '09-02-2020', 'teamA': 'FlyQuest', 'teamB': 'Evil.Geniuses', 'teamAWin': '0', 'teamBWin': '1', 'playerTeam': 0}<EsportsMatchStats 103462440145619638, 90, 1>

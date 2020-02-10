@@ -1,0 +1,1 @@
+{'gameID': '103462440145619680', 'playerName': 'IMT.Hakuho', 'teamName': 'Immortals', 'matchWin': '0', 'legend': 'Thresh', 'kills': 1, 'assists': 9, 'deaths': 0, 'creepScore': 38, 'teamTotal': 5, 'matchType': 1, 'matchTime': '26-01-2020', 'teamA': 'Immortals', 'teamB': 'FlyQuest', 'teamAWin': '0', 'teamBWin': '1', 'playerTeam': 0}<EsportsMatchStats 103462440145619680, 85, 1>

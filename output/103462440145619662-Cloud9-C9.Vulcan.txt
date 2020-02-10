@@ -1,0 +1,1 @@
+{'gameID': '103462440145619662', 'playerName': 'C9.Vulcan', 'teamName': 'Cloud9', 'matchWin': '1', 'legend': 'Nautilus', 'kills': 0, 'assists': 1, 'deaths': 3, 'creepScore': 32, 'teamTotal': 2, 'matchType': 1, 'matchTime': '09-02-2020', 'teamA': 'Dignitas', 'teamB': 'Cloud9', 'teamAWin': '0', 'teamBWin': '1', 'playerTeam': 1}<EsportsMatchStats 103462440145619662, 55, 1>
