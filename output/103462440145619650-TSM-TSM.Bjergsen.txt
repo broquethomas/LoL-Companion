@@ -1,1 +1,0 @@
-{'gameID': '103462440145619650', 'playerName': 'TSM.Bjergsen', 'teamName': 'TSM', 'matchWin': '1', 'legend': 'Syndra', 'kills': 0, 'assists': 2, 'deaths': 2, 'creepScore': 208, 'teamTotal': 0, 'matchType': 1, 'matchTime': '04-02-2020', 'teamA': 'TSM', 'teamB': 'Counter.Logic.Gaming', 'teamAWin': '1', 'teamBWin': '0', 'playerTeam': 0}<EsportsMatchStats 103462440145619650, 96, 1>

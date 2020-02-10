@@ -1,1 +1,0 @@
-{'gameID': '103462440145619652', 'playerName': 'TSM.Broken Blade', 'teamName': 'TSM', 'matchWin': '0', 'legend': 'Gangplank', 'kills': 1, 'assists': 4, 'deaths': 0, 'creepScore': 241, 'teamTotal': 0, 'matchType': 1, 'matchTime': '28-01-2020', 'teamA': 'Team.Liquid', 'teamB': 'TSM', 'teamAWin': '1', 'teamBWin': '0', 'playerTeam': 1}<EsportsMatchStats 103462440145619652, 94, 1>

@@ -1,1 +1,0 @@
-{'gameID': '103462440145619690', 'playerName': 'DIG.Grig', 'teamName': 'Dignitas', 'matchWin': '0', 'legend': 'LeeSin', 'kills': 2, 'assists': 15, 'deaths': 2, 'creepScore': 162, 'teamTotal': 0, 'matchType': 1, 'matchTime': '04-02-2020', 'teamA': 'FlyQuest', 'teamB': 'Dignitas', 'teamAWin': '1', 'teamBWin': '0', 'playerTeam': 1}<EsportsMatchStats 103462440145619690, 67, 1>

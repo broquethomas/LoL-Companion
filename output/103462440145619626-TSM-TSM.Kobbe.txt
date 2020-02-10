@@ -1,1 +1,0 @@
-{'gameID': '103462440145619626', 'playerName': 'TSM.Kobbe', 'teamName': 'TSM', 'matchWin': '1', 'legend': 'Xayah', 'kills': 4, 'assists': 3, 'deaths': 2, 'creepScore': 380, 'teamTotal': 5, 'matchType': 1, 'matchTime': '02-02-2020', 'teamA': 'Evil.Geniuses', 'teamB': 'TSM', 'teamAWin': '0', 'teamBWin': '1', 'playerTeam': 1}<EsportsMatchStats 103462440145619626, 97, 1>

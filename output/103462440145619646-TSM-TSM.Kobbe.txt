@@ -1,1 +1,0 @@
-{'gameID': '103462440145619646', 'playerName': 'TSM.Kobbe', 'teamName': 'TSM', 'matchWin': '0', 'legend': 'Senna', 'kills': 4, 'assists': 2, 'deaths': 0, 'creepScore': 556, 'teamTotal': 1, 'matchType': 1, 'matchTime': '26-01-2020', 'teamA': 'TSM', 'teamB': 'Immortals', 'teamAWin': '0', 'teamBWin': '1', 'playerTeam': 0}<EsportsMatchStats 103462440145619646, 97, 1>

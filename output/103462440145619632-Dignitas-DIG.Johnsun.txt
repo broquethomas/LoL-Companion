@@ -1,1 +1,0 @@
-{'gameID': '103462440145619632', 'playerName': 'DIG.Johnsun', 'teamName': 'Dignitas', 'matchWin': '1', 'legend': 'Senna', 'kills': 1, 'assists': 0, 'deaths': 0, 'creepScore': 275, 'teamTotal': 0, 'matchType': 1, 'matchTime': '26-01-2020', 'teamA': 'Dignitas', 'teamB': 'Evil.Geniuses', 'teamAWin': '1', 'teamBWin': '0', 'playerTeam': 0}<EsportsMatchStats 103462440145619632, 69, 1>

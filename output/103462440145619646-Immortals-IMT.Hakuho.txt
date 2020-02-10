@@ -1,1 +1,0 @@
-{'gameID': '103462440145619646', 'playerName': 'IMT.Hakuho', 'teamName': 'Immortals', 'matchWin': '1', 'legend': 'Braum', 'kills': 0, 'assists': 4, 'deaths': 1, 'creepScore': 61, 'teamTotal': 1, 'matchType': 1, 'matchTime': '26-01-2020', 'teamA': 'TSM', 'teamB': 'Immortals', 'teamAWin': '0', 'teamBWin': '1', 'playerTeam': 1}<EsportsMatchStats 103462440145619646, 85, 1>

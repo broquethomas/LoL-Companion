@@ -1,1 +1,0 @@
-{'gameID': '103462440145619670', 'playerName': 'C9.Nisqy', 'teamName': 'Cloud9', 'matchWin': '1', 'legend': 'Zoe', 'kills': 0, 'assists': 2, 'deaths': 3, 'creepScore': 292, 'teamTotal': 3, 'matchType': 1, 'matchTime': '26-01-2020', 'teamA': 'Golden.Guardians', 'teamB': 'Cloud9', 'teamAWin': '0', 'teamBWin': '1', 'playerTeam': 1}<EsportsMatchStats 103462440145619670, 53, 1>

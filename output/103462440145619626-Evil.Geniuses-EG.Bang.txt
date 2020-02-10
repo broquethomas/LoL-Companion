@@ -1,1 +1,0 @@
-{'gameID': '103462440145619626', 'playerName': 'EG.Bang', 'teamName': 'Evil.Geniuses', 'matchWin': '0', 'legend': 'Aphelios', 'kills': 6, 'assists': 10, 'deaths': 2, 'creepScore': 401, 'teamTotal': 6, 'matchType': 1, 'matchTime': '02-02-2020', 'teamA': 'Evil.Geniuses', 'teamB': 'TSM', 'teamAWin': '0', 'teamBWin': '1', 'playerTeam': 0}<EsportsMatchStats 103462440145619626, 92, 1>

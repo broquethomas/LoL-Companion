@@ -1,1 +1,0 @@
-{'gameID': '103462440145619668', 'playerName': 'FLY.IgNar', 'teamName': 'FlyQuest', 'matchWin': '0', 'legend': 'TahmKench', 'kills': 1, 'assists': 9, 'deaths': 0, 'creepScore': 34, 'teamTotal': 1, 'matchType': 1, 'matchTime': '09-02-2020', 'teamA': 'Cloud9', 'teamB': 'FlyQuest', 'teamAWin': '1', 'teamBWin': '0', 'playerTeam': 1}<EsportsMatchStats 103462440145619668, 90, 1>

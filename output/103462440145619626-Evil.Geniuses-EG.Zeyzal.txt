@@ -1,1 +1,0 @@
-{'gameID': '103462440145619626', 'playerName': 'EG.Zeyzal', 'teamName': 'Evil.Geniuses', 'matchWin': '0', 'legend': 'Thresh', 'kills': 1, 'assists': 16, 'deaths': 1, 'creepScore': 52, 'teamTotal': 6, 'matchType': 1, 'matchTime': '02-02-2020', 'teamA': 'Evil.Geniuses', 'teamB': 'TSM', 'teamAWin': '0', 'teamBWin': '1', 'playerTeam': 0}<EsportsMatchStats 103462440145619626, 93, 1>

@@ -1,1 +1,0 @@
-{'gameID': '103462440145619682', 'playerName': 'IMT.sOAZ', 'teamName': 'Immortals', 'matchWin': '1', 'legend': 'Sett', 'kills': 0, 'assists': 2, 'deaths': 2, 'creepScore': 205, 'teamTotal': 1, 'matchType': 1, 'matchTime': '02-02-2020', 'teamA': 'Immortals', 'teamB': 'Golden.Guardians', 'teamAWin': '1', 'teamBWin': '0', 'playerTeam': 0}<EsportsMatchStats 103462440145619682, 81, 1>

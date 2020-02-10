@@ -1,1 +1,0 @@
-{'gameID': '103462440145619688', 'playerName': 'DIG.Grig', 'teamName': 'Dignitas', 'matchWin': '1', 'legend': 'JarvanIV', 'kills': 1, 'assists': 4, 'deaths': 3, 'creepScore': 200, 'teamTotal': 5, 'matchType': 1, 'matchTime': '01-02-2020', 'teamA': 'Dignitas', 'teamB': 'Team.Liquid', 'teamAWin': '1', 'teamBWin': '0', 'playerTeam': 0}<EsportsMatchStats 103462440145619688, 67, 1>

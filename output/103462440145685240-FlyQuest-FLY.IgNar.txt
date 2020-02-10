@@ -1,1 +1,0 @@
-{'gameID': '103462440145685240', 'playerName': 'FLY.IgNar', 'teamName': 'FlyQuest', 'matchWin': '0', 'legend': 'Rakan', 'kills': 0, 'assists': 9, 'deaths': 0, 'creepScore': 33, 'teamTotal': 0, 'matchType': 1, 'matchTime': '02-02-2020', 'teamA': 'Team.Liquid', 'teamB': 'FlyQuest', 'teamAWin': '1', 'teamBWin': '0', 'playerTeam': 1}<EsportsMatchStats 103462440145685240, 90, 1>

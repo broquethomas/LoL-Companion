@@ -1,1 +1,0 @@
-{'gameID': '103462440145619660', 'playerName': 'IMT.Eika', 'teamName': 'Immortals', 'matchWin': '0', 'legend': 'Yasuo', 'kills': 1, 'assists': 9, 'deaths': 2, 'creepScore': 238, 'teamTotal': 2, 'matchType': 1, 'matchTime': '02-02-2020', 'teamA': 'Cloud9', 'teamB': 'Immortals', 'teamAWin': '1', 'teamBWin': '0', 'playerTeam': 1}<EsportsMatchStats 103462440145619660, 83, 1>

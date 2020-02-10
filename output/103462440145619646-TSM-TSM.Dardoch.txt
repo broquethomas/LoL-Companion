@@ -1,1 +1,0 @@
-{'gameID': '103462440145619646', 'playerName': 'TSM.Dardoch', 'teamName': 'TSM', 'matchWin': '0', 'legend': 'LeeSin', 'kills': 2, 'assists': 3, 'deaths': 3, 'creepScore': 254, 'teamTotal': 1, 'matchType': 1, 'matchTime': '26-01-2020', 'teamA': 'TSM', 'teamB': 'Immortals', 'teamAWin': '0', 'teamBWin': '1', 'playerTeam': 0}<EsportsMatchStats 103462440145619646, 95, 1>

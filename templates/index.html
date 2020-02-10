@@ -15,6 +15,31 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        body {
+            background-color: gray;
+        }
+        .collapsible {
+            background-color: #777;
+            color: white;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+        }
+        .active, .collapsible:hover {
+            background-color: #555;
+        }     
+
+        .content {
+            padding: 0 18px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            background-color: #f1f1f1;
+        }
 </style>
 
 {% endblock %}
@@ -22,6 +47,10 @@
 {% block body %}
 <script>
     //API KEYS
+    window.onload = function(e){ 
+        console.log("here")
+        showMatches() 
+    }
     let apiKey = "?api_key=RGAPI-1242c3c9-9587-476b-b81e-caa5271ef701"
     let apiKeyEsports = "?api_key=0TvQnueqKa5mxJntVWt0w4LpLfEkrV1Ta8rQBb9Z"
 
@@ -238,6 +267,22 @@
         } 
     }
 
+    function showMatches(){
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.maxHeight){
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                } 
+            });
+        }   
+    }
+
 </script>
 <div class="MainContainer" >
     <h1>League Of Legends Fantasy League Companion</h1>
@@ -245,49 +290,61 @@
             MatchID URL: <input style="width: 20rem;" type="text" name="matchID" id="matchID">
             <br>
             <input type="submit" value="Update Database" onclick="getMatchID()">
-        <br><br>
+            <br><br>
             <div style="display: none;" class="loader" id="loader">
                 <h1 id="loadingString">Collecting Data</h1>
             </div>
     </div>
     <div class="LCS">
-        
+        <div class="Schedule">
             {% for schedule in sortedLCSMatches[0] %}
-                <div class="Schedule DropDown">
-                    <span>
-                            <h1>{{schedule[0].matchTime}}</h1>
-                            <h3>Games Played: {{schedule|length}}</h1>
-                            <h3>Teams Participated: {{schedule|length * 2}}</h1>
-                            <h3>Organization: LCS</h1>
-                    </span>
+                <div class="collapsible" >
                     
-                {% set outer_loop = loop %}
-                {% for matches in schedule %}
+                    <h1>{{schedule[0].matchTime}}</h1>
+                    
                     <div>
-                        <h1>{{matches.teamA}} vs {{matches.teamB}}</h1>
-                        <span>
-                            <h3 style="display: inline;">{{matches.teamA}} Points - </h3>
-                            {% for players in sortedLCSMatches[1][outer_loop.index0][loop.index0] %}
-                                {% if loop.index0 < 5 %}
-                                <h4 style="display: inline;">{{players.playerName}} : {{players.playerScore}}</h4>
-                                {% endif %}                                
-                            {% endfor %}
-                        </span>
-                        <br>
-                        <span>
-                            <h3 style="display: inline;">{{matches.teamB}} Points - </h3>
-                            {% for players in sortedLCSMatches[1][outer_loop.index0][loop.index0] %}
-                                {% if loop.index0 > 4 %}
-                                <h4 style="display: inline;">{{players.playerName}} : {{players.playerScore}} </h4>
-                                {% endif %}                                
-                            {% endfor %}
-                        </span>
+                        <h3 style="display: inline; padding-right: 2rem;">Games Played: {{schedule|length}}    </h1>
+                        <h3 style="display: inline; padding-right: 2rem;">Teams Participated: {{schedule|length * 2}}   </h1>
+                        <h3 style="display: inline;">Organization: LCS    </h1>
                     </div>
-                {% endfor %}
                 </div>
+                    {% set outer_loop = loop %}
+                    <div class="content"> 
+                    {% for matches in schedule %}
+                         
+                            <h1>{{matches.teamA}} vs {{matches.teamB}}</h1>
+                            <div>
+                                <h3 style="display: inline;">{{matches.teamA}} Pts - </h3>
+                                {% for players in sortedLCSMatches[1][outer_loop.index0][loop.index0] %}
+                                    {% if loop.index0 < 5 %}
+                                        <span>
+                                            <h4 style="display: inline;">{{players.playerName}} : </h4>
+                                            <h4 style="display: inline;"> {{players.playerScore}} </h4> 
+                                        </span>
+                                    {% endif %}                                
+                                {% endfor %}
+                            </div>
+                            <br>
+                            <div>
+                                <h3 style="display: inline;">{{matches.teamB}} Pts - </h3>
+                                {% for players in sortedLCSMatches[1][outer_loop.index0][loop.index0] %}
+                                    {% if loop.index0 > 4 %}
+                                        <span>
+                                            <h4 style="display: inline;">{{players.playerName}} : </h4>
+                                            <h4 style="display: inline;"> {{players.playerScore}} </h4> 
+                                        </span>
+                                    {% endif %}                                
+                                {% endfor %}
+                            </div>
+                            <br>
+                        
+                    {% endfor %}
+                </div>
+                <br>
             {% endfor %}
+        </div>
+            
     </div>
-    <br><br><br>
     
         
 </div>

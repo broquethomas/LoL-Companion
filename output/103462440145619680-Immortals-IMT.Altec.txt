@@ -1,1 +1,0 @@
-{'gameID': '103462440145619680', 'playerName': 'IMT.Altec', 'teamName': 'Immortals', 'matchWin': '0', 'legend': 'Cassiopeia', 'kills': 3, 'assists': 12, 'deaths': 3, 'creepScore': 291, 'teamTotal': 5, 'matchType': 1, 'matchTime': '26-01-2020', 'teamA': 'Immortals', 'teamB': 'FlyQuest', 'teamAWin': '0', 'teamBWin': '1', 'playerTeam': 0}<EsportsMatchStats 103462440145619680, 84, 1>

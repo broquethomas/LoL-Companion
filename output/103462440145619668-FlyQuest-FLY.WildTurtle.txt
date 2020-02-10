@@ -1,1 +1,0 @@
-{'gameID': '103462440145619668', 'playerName': 'FLY.WildTurtle', 'teamName': 'FlyQuest', 'matchWin': '0', 'legend': 'Senna', 'kills': 7, 'assists': 7, 'deaths': 0, 'creepScore': 288, 'teamTotal': 1, 'matchType': 1, 'matchTime': '09-02-2020', 'teamA': 'Cloud9', 'teamB': 'FlyQuest', 'teamAWin': '1', 'teamBWin': '0', 'playerTeam': 1}<EsportsMatchStats 103462440145619668, 89, 1>

@@ -1,1 +1,0 @@
-{'gameID': '103462440145619680', 'playerName': 'FLY.V1per', 'teamName': 'FlyQuest', 'matchWin': '1', 'legend': 'Riven', 'kills': 0, 'assists': 2, 'deaths': 3, 'creepScore': 275, 'teamTotal': 5, 'matchType': 1, 'matchTime': '26-01-2020', 'teamA': 'Immortals', 'teamB': 'FlyQuest', 'teamAWin': '0', 'teamBWin': '1', 'playerTeam': 1}<EsportsMatchStats 103462440145619680, 86, 1>

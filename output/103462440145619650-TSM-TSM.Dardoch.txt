@@ -1,1 +1,0 @@
-{'gameID': '103462440145619650', 'playerName': 'TSM.Dardoch', 'teamName': 'TSM', 'matchWin': '1', 'legend': 'Qiyana', 'kills': 5, 'assists': 1, 'deaths': 2, 'creepScore': 204, 'teamTotal': 0, 'matchType': 1, 'matchTime': '04-02-2020', 'teamA': 'TSM', 'teamB': 'Counter.Logic.Gaming', 'teamAWin': '1', 'teamBWin': '0', 'playerTeam': 0}<EsportsMatchStats 103462440145619650, 95, 1>

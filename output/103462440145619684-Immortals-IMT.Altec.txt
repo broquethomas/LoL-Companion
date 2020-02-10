@@ -1,1 +1,0 @@
-{'gameID': '103462440145619684', 'playerName': 'IMT.Altec', 'teamName': 'Immortals', 'matchWin': '1', 'legend': 'Aphelios', 'kills': 2, 'assists': 3, 'deaths': 4, 'creepScore': 257, 'teamTotal': 2, 'matchType': 1, 'matchTime': '09-02-2020', 'teamA': 'Immortals', 'teamB': '100.Thieves', 'teamAWin': '1', 'teamBWin': '0', 'playerTeam': 0}<EsportsMatchStats 103462440145619684, 84, 1>

@@ -1,1 +1,0 @@
-{'gameID': '103462440145619684', 'playerName': '100.Stunt', 'teamName': '100.Thieves', 'matchWin': '0', 'legend': 'Thresh', 'kills': 1, 'assists': 9, 'deaths': 2, 'creepScore': 36, 'teamTotal': 0, 'matchType': 1, 'matchTime': '09-02-2020', 'teamA': 'Immortals', 'teamB': '100.Thieves', 'teamAWin': '1', 'teamBWin': '0', 'playerTeam': 1}<EsportsMatchStats 103462440145619684, 75, 1>

@@ -1,1 +1,0 @@
-{'gameID': '103462440145619690', 'playerName': 'DIG.Johnsun', 'teamName': 'Dignitas', 'matchWin': '0', 'legend': 'Aphelios', 'kills': 5, 'assists': 13, 'deaths': 0, 'creepScore': 293, 'teamTotal': 0, 'matchType': 1, 'matchTime': '04-02-2020', 'teamA': 'FlyQuest', 'teamB': 'Dignitas', 'teamAWin': '1', 'teamBWin': '0', 'playerTeam': 1}<EsportsMatchStats 103462440145619690, 69, 1>

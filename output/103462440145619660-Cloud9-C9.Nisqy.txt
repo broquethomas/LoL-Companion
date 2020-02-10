@@ -1,1 +1,0 @@
-{'gameID': '103462440145619660', 'playerName': 'C9.Nisqy', 'teamName': 'Cloud9', 'matchWin': '1', 'legend': 'Pantheon', 'kills': 0, 'assists': 1, 'deaths': 2, 'creepScore': 276, 'teamTotal': 0, 'matchType': 1, 'matchTime': '02-02-2020', 'teamA': 'Cloud9', 'teamB': 'Immortals', 'teamAWin': '1', 'teamBWin': '0', 'playerTeam': 0}<EsportsMatchStats 103462440145619660, 53, 1>

@@ -1,1 +1,0 @@
-{'gameID': '103462440145619666', 'playerName': 'C9.Vulcan', 'teamName': 'Cloud9', 'matchWin': '1', 'legend': 'TahmKench', 'kills': 1, 'assists': 0, 'deaths': 1, 'creepScore': 34, 'teamTotal': 0, 'matchType': 1, 'matchTime': '25-01-2020', 'teamA': 'Cloud9', 'teamB': 'Team.Liquid', 'teamAWin': '1', 'teamBWin': '0', 'playerTeam': 0}<EsportsMatchStats 103462440145619666, 55, 1>

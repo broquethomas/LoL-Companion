@@ -1,1 +1,0 @@
-{'gameID': '103462440145619646', 'playerName': 'TSM.Biofrost', 'teamName': 'TSM', 'matchWin': '0', 'legend': 'TahmKench', 'kills': 0, 'assists': 8, 'deaths': 3, 'creepScore': 43, 'teamTotal': 1, 'matchType': 1, 'matchTime': '26-01-2020', 'teamA': 'TSM', 'teamB': 'Immortals', 'teamAWin': '0', 'teamBWin': '1', 'playerTeam': 0}<EsportsMatchStats 103462440145619646, 98, 1>

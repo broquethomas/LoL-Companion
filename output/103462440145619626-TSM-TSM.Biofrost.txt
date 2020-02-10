@@ -1,1 +1,0 @@
-{'gameID': '103462440145619626', 'playerName': 'TSM.Biofrost', 'teamName': 'TSM', 'matchWin': '1', 'legend': 'Rakan', 'kills': 0, 'assists': 8, 'deaths': 4, 'creepScore': 42, 'teamTotal': 5, 'matchType': 1, 'matchTime': '02-02-2020', 'teamA': 'Evil.Geniuses', 'teamB': 'TSM', 'teamAWin': '0', 'teamBWin': '1', 'playerTeam': 1}<EsportsMatchStats 103462440145619626, 98, 1>

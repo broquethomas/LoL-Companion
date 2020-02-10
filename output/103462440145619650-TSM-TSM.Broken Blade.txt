@@ -1,1 +1,0 @@
-{'gameID': '103462440145619650', 'playerName': 'TSM.Broken Blade', 'teamName': 'TSM', 'matchWin': '1', 'legend': 'Ornn', 'kills': 1, 'assists': 5, 'deaths': 4, 'creepScore': 176, 'teamTotal': 0, 'matchType': 1, 'matchTime': '04-02-2020', 'teamA': 'TSM', 'teamB': 'Counter.Logic.Gaming', 'teamAWin': '1', 'teamBWin': '0', 'playerTeam': 0}<EsportsMatchStats 103462440145619650, 94, 1>

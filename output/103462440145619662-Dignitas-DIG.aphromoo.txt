@@ -1,1 +1,0 @@
-{'gameID': '103462440145619662', 'playerName': 'DIG.aphromoo', 'teamName': 'Dignitas', 'matchWin': '0', 'legend': 'TahmKench', 'kills': 1, 'assists': 8, 'deaths': 0, 'creepScore': 34, 'teamTotal': 6, 'matchType': 1, 'matchTime': '09-02-2020', 'teamA': 'Dignitas', 'teamB': 'Cloud9', 'teamAWin': '0', 'teamBWin': '1', 'playerTeam': 0}<EsportsMatchStats 103462440145619662, 70, 1>

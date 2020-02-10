@@ -1,1 +1,0 @@
-{'gameID': '103462440145685240', 'playerName': 'TL.CoreJJ', 'teamName': 'Team.Liquid', 'matchWin': '1', 'legend': 'Braum', 'kills': 0, 'assists': 3, 'deaths': 1, 'creepScore': 36, 'teamTotal': 2, 'matchType': 1, 'matchTime': '02-02-2020', 'teamA': 'Team.Liquid', 'teamB': 'FlyQuest', 'teamAWin': '1', 'teamBWin': '0', 'playerTeam': 0}<EsportsMatchStats 103462440145685240, 60, 1>
