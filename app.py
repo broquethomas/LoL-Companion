@@ -97,6 +97,7 @@ def index():
     sortedLCSAcademyMatches = []
     sortedLCSMatchStats = []
     sortedLCSAcademyMatchStats = []
+    runApp = True
     lastGameID = 0
     matchCount = len(allMatches)
     lcsData = []
@@ -109,7 +110,9 @@ def index():
         else:
             lcsMatches.append(matches)
             lcsMatchStats.append(EsportsMatchStats.query.filter_by(matchID = matches.gameID).order_by(EsportsMatchStats.playerTeam).all())
-
+    if(len(allMatches) == 0):
+        runApp = False
+    
     previous = ""
     buildArray = []
     statsBuildArray = []
@@ -166,11 +169,13 @@ def index():
                 innerBuildArray.append(matches)
                 innerStatsBuildArray.append(lcsAcademyMatchStats[count])
         count += 1
-        
+
     buildArray.append(innerBuildArray)
     statsBuildArray.append(innerStatsBuildArray)
     sortedLCSAcademyMatches = [buildArray, statsBuildArray]
-    
+    if(not runApp):
+        sortedLCSMatches = []
+        sortedLCSAcademyMatches = []
 
     
     for team in allTeams:
@@ -181,7 +186,7 @@ def index():
     return render_template('index.html', allTeams = allTeams, 
         allTeamPlayers=allTeamPlayers, allMatches = allMatches, 
         lastGameID = lastGameID, matchCount = matchCount, sortedLCSMatches = sortedLCSMatches, 
-        sortedLCSAcademyMatches = sortedLCSAcademyMatches, title="Show Teams")
+        sortedLCSAcademyMatches = sortedLCSAcademyMatches, runApp = runApp, title="Show Teams")
 
 
 
@@ -284,11 +289,18 @@ def addMatchStats(matchID, playerID, kills, assists, deaths, creepScore, tripleK
     db.session.commit()
 
 def calculatePlayerScore(kills, assists, deaths, creepScore, teamTotalKills):
-        flawless = 0
+        flawless = 1
         if(deaths == 0):
-            flawless = 1
-        killAssistBonus = int((kills + assists) / 10)
-        playerScore = (kills*3 + assists*2) + creepScore*0.02 + killAssistBonus + (teamTotalKills / max(1, (kills + assists)))*0.25 + flawless*5 - deaths*0.5 
+            flawless = 1.2
+        killPoints = kills*3
+        assistsPoints = assists*2
+        deathsPoints = deaths*0.5
+        creepScorePoints = creepScore*0.02
+        killAssistBonus = int((kills + assists) / 10)*2
+        participation = ((kills + assists) / max([1, teamTotalKills]))*100
+        participation *= 0.25
+        playerScore = killPoints + assistsPoints + creepScorePoints + killAssistBonus + participation - deathsPoints
+        playerScore *= flawless 
         return round(playerScore, 2)
     
 if __name__ == "__main__":

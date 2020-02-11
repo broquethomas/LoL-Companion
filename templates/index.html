@@ -146,14 +146,14 @@
                     if(x == 1){
                             teamA = false
                             
-                        }else{
+                    }else{
                             teamA = true
-                        }
+                    }
                     if(teamA){
-                        player = {"gameID": collectedData[0][0][i][2], "playerName": collectedData[1][i][x][5][y*2], "teamName": collectedData[0][0][i][0].replace(" ", "."), "matchWin": collectedData[0][0][i][1], "legend": collectedData[1][i][x][5][oddIndex], "kills": collectedData[1][i][x][y][0], "assists": collectedData[1][i][x][y][2], "deaths": collectedData[1][i][x][y][1], "creepScore": collectedData[1][i][x][y][3], "teamTotal": collectedData[1][i][x][2][0], "matchType": collectedData[2][i], "matchTime": collectedData[3][i], "teamA": collectedData[0][0][i][0].replace(" ", "."), "teamB": collectedData[0][1][i][0].replace(" ", "."), "teamAWin": collectedData[0][0][i][1], "teamBWin": collectedData[0][1][i][1], "playerTeam": 0}
+                        player = {"gameID": collectedData[0][0][i][2], "playerName": collectedData[1][i][x][5][y*2], "teamName": collectedData[0][0][i][0].replace(" ", "."), "matchWin": collectedData[0][0][i][1], "legend": collectedData[1][i][x][5][oddIndex], "kills": collectedData[1][i][x][y][0], "assists": collectedData[1][i][x][y][2], "deaths": collectedData[1][i][x][y][1], "creepScore": collectedData[1][i][x][y][3], "teamTotal": collectedData[1][i][2][0], "matchType": collectedData[2][i], "matchTime": collectedData[3][i], "teamA": collectedData[0][0][i][0].replace(" ", "."), "teamB": collectedData[0][1][i][0].replace(" ", "."), "teamAWin": collectedData[0][0][i][1], "teamBWin": collectedData[0][1][i][1], "playerTeam": 0}
                         oddIndex += 2
                     }else{
-                        player = {"gameID": collectedData[0][1][i][2], "playerName": collectedData[1][i][x][5][y*2], "teamName": collectedData[0][1][i][0].replace(" ", "."), "matchWin": collectedData[0][1][i][1], "legend": collectedData[1][i][x][5][oddIndex], "kills": collectedData[1][i][x][y][0], "assists": collectedData[1][i][x][y][2], "deaths": collectedData[1][i][x][y][1], "creepScore": collectedData[1][i][x][y][3], "teamTotal": collectedData[1][i][x][2][1], "matchType": collectedData[2][i], "matchTime": collectedData[3][i], "teamA": collectedData[0][0][i][0].replace(" ", "."), "teamB": collectedData[0][1][i][0].replace(" ", "."), "teamAWin": collectedData[0][0][i][1], "teamBWin": collectedData[0][1][i][1], "playerTeam": 1}
+                        player = {"gameID": collectedData[0][1][i][2], "playerName": collectedData[1][i][x][5][y*2], "teamName": collectedData[0][1][i][0].replace(" ", "."), "matchWin": collectedData[0][1][i][1], "legend": collectedData[1][i][x][5][oddIndex], "kills": collectedData[1][i][x][y][0], "assists": collectedData[1][i][x][y][2], "deaths": collectedData[1][i][x][y][1], "creepScore": collectedData[1][i][x][y][3], "teamTotal": collectedData[1][i][2][1], "matchType": collectedData[2][i], "matchTime": collectedData[3][i], "teamA": collectedData[0][0][i][0].replace(" ", "."), "teamB": collectedData[0][1][i][0].replace(" ", "."), "teamAWin": collectedData[0][0][i][1], "teamBWin": collectedData[0][1][i][1], "playerTeam": 1}
                         oddIndex += 2
                         
                     }
@@ -274,14 +274,27 @@
         
         let teamA = []
         let teamB = []
-        var teamAMembers = []
-        var teamBMembers = []
-        var teamKills = []
-        var teamAKills = 0
-        var teamBKills = 0 
+        let teamAMembers = []
+        let teamBMembers = []
+        let teamKills = []
+        let teamAKills = 0
+        let teamBKills = 0 
         for(var i = 0; i < data.gameMetadata.blueTeamMetadata.participantMetadata.length; i++){
             teamA.push(data.gameMetadata.blueTeamMetadata.participantMetadata[i].summonerName.replace(" ", "."))
             teamA.push(data.gameMetadata.blueTeamMetadata.participantMetadata[i].championId)
+        }
+        for(var x = 0; x < data.frames[data.frames.length - 1].blueTeam.participants.length; x++){
+                playerKills = data.frames[data.frames.length - 1].blueTeam.participants[x].kills
+                playerDeaths = data.frames[data.frames.length - 1].blueTeam.participants[x].deaths
+                playerAssists = data.frames[data.frames.length - 1].blueTeam.participants[x].assists
+                playerCreepScore = data.frames[data.frames.length - 1].blueTeam.participants[x].creepScore
+                teamAKills += playerKills
+                teamAMembers.push([playerKills, playerDeaths, playerAssists, playerCreepScore, gameID])
+                
+        }
+        for(var i = 0; i < data.gameMetadata.redTeamMetadata.participantMetadata.length; i++){
+            teamB.push(data.gameMetadata.redTeamMetadata.participantMetadata[i].summonerName.replace(" ", "."))
+            teamB.push(data.gameMetadata.redTeamMetadata.participantMetadata[i].championId)
         }
         for(var x = 0; x < data.frames[data.frames.length - 1].redTeam.participants.length; x++){
                 
@@ -289,21 +302,12 @@
                 playerDeaths = data.frames[data.frames.length - 1].redTeam.participants[x].deaths
                 playerAssists = data.frames[data.frames.length - 1].redTeam.participants[x].assists
                 playerCreepScore = data.frames[data.frames.length - 1].redTeam.participants[x].creepScore
-                teamAMembers.push([playerKills, playerDeaths, playerAssists, playerCreepScore, gameID])
-                teamAKills += playerKills
-        }
-        for(var i = 0; i < data.gameMetadata.redTeamMetadata.participantMetadata.length; i++){
-            teamB.push(data.gameMetadata.redTeamMetadata.participantMetadata[i].summonerName.replace(" ", "."))
-            teamB.push(data.gameMetadata.redTeamMetadata.participantMetadata[i].championId)
-        }
-        for(var x = 0; x < data.frames[data.frames.length - 1].blueTeam.participants.length; x++){
-                playerKills = data.frames[data.frames.length - 1].blueTeam.participants[x].kills
-                playerDeaths = data.frames[data.frames.length - 1].blueTeam.participants[x].deaths
-                playerAssists = data.frames[data.frames.length - 1].blueTeam.participants[x].assists
-                playerCreepScore = data.frames[data.frames.length - 1].blueTeam.participants[x].creepScore
-                teamBMembers.push([playerKills, playerDeaths, playerAssists, playerCreepScore, gameID])
                 teamBKills += playerKills
+                teamBMembers.push([playerKills, playerDeaths, playerAssists, playerCreepScore, gameID])
+                
         }
+        
+        
         var output = [teamA, teamB]
         teamAMembers.push(teamA)
         teamBMembers.push(teamB)
@@ -388,7 +392,7 @@
             </div>
           
     </div>
-          
+    
     <div class="LCS" id="LCS" style="width: 90%; height: fit-content; margin: 0 auto; display: block;">
         <div class="Schedule">
             {% for schedule in sortedLCSMatches[0] %}
@@ -579,9 +583,12 @@
                         </div>
                         <br><br>
                     {% endfor %}
+
             </div>  
+            
         </div>  
     </div>   
+    
 </div>
 
 {% endblock %}
