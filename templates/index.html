@@ -137,7 +137,13 @@
 
     async function updateDataBase(collectedData){
         let playerCollection = []
+
         if(collectedData[1].length > {{matchCount}}){
+            matchCount = {{matchCount}}
+
+            if(matchCount == 0){
+                matchCount += 1
+            }
             for(var i = 0; i < collectedData[1].length; i++){
             for(var x = 0; x < collectedData[1][i].length-1; x++){
                 let teamA = true
@@ -158,9 +164,7 @@
                         
                     }
                     if(collectedData[1][i][x][5][y*2] != undefined && collectedData[1][i][x][5][y*2] != ""){
-                        if(String(player.gameID) == "103462440145619632" && player.playerName == "DIG.aphromoo"){
-                            console.log(player)
-                        }
+                        
                         const postResponse = await fetch('http://localhost:5000/updateDatabase', {
                             method: 'POST',
                             headers: {
@@ -227,6 +231,7 @@
         let allGames = []
         let matchTypes = []
         let matchTimes = []
+        let checkTimes = []
         let start = true
         for(var i =0; i < data.data.schedule.events.length; i++){ 
             var leagueName = data.data.schedule.events[i].league.name
@@ -238,6 +243,7 @@
                     }
                     let newStartTime = new Date(data.data.schedule.events[i].startTime);
                     let timeSplit = String(data.data.schedule.events[i].startTime).split("-")
+                    checkTimes.push(data.data.schedule.events[i].startTime)
                     newTime = timeSplit[2].substring(0, 2) + "-" + timeSplit[1] + "-" + timeSplit[0]
                     matchTimes.push(newTime)
                     newStartTime.setSeconds((newStartTime.getSeconds() + ((timeNow - newStartTime) / 1000)));
@@ -482,7 +488,7 @@
                             <hr> 
                     {% endfor %}
                     <br><br><br><br><br><br><br><br><br><br><br><br><br>
-                    <br><br><br><br><br><br><br><br><br><br><br><br>
+                    <br><br><br><br><br><br><br><br><br><br><br><br><br>
                 </div>
                 <br><br>
             {% endfor %}
@@ -579,7 +585,7 @@
                                     <hr> 
                             {% endfor %}
                             <br><br><br><br><br><br><br><br><br><br><br><br><br>
-                            <br><br><br><br><br><br><br><br><br><br><br><br>
+                            <br><br><br><br><br><br><br><br><br><br><br><br><br>
                         </div>
                         <br><br>
                     {% endfor %}
