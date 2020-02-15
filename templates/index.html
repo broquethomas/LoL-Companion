@@ -144,7 +144,7 @@
             if(matchCount == 0){
                 matchCount += 1
             }
-            for(var i = 0; i < collectedData[1].length; i++){
+            for(var i = matchCount - 1; i < collectedData[1].length; i++){
             for(var x = 0; x < collectedData[1][i].length-1; x++){
                 let teamA = true
                 let oddIndex = 1
@@ -353,6 +353,13 @@
         console.log("here")
         let lcs = document.getElementById("LCS")
         let academy = document.getElementById("Academy")
+        if(lcs.style.display == "block"){
+            lcs.style.display = "none"
+            academy.style.display = "block"
+        }else{
+            lcs.style.display = "block"
+            academy.style.display = "none"    
+        }
         
     }
 
@@ -401,7 +408,21 @@
     
     <div class="LCS" id="LCS" style="width: 90%; height: fit-content; margin: 0 auto; display: block;">
         <div class="Schedule">
+            
+            {% if sortedLCSMatches[0]|length > 0 %}
+                <div>
+                    <h1>Week 1</h1>
+                </div>
+            {% endif %}
+            {% set countWeek = namespace(value=0) %}
             {% for schedule in sortedLCSMatches[0] %}
+
+            {% if countWeek.value == 3 %}
+                {% set countWeek.value = 0 %}
+                <div>
+                    <h1>Week {{(loop.index0/3 + 1)|int}}</h1>
+                </div>
+            {% endif %}
                 <div class="collapsible">
                     
                     <h1 style="color: rgba(85, 115, 249, 1.00); font-size: 3rem; padding: 0px; font-family: 'Work Sans', sans-serif; margin: 0px;">{{schedule[0].matchTime}}</h1>
@@ -491,12 +512,27 @@
                     <br><br><br><br><br><br><br><br><br><br><br><br><br>
                 </div>
                 <br><br>
+                {% set countWeek.value = countWeek.value + 1 %}
             {% endfor %}
         </div>
-        <br><br><br><br>
-        <div class="Academy" id="Academy" style="width: 100%; height: fit-content; margin: 0 auto; display: block;">
+        <br><br><br><br>   
+        
+        </div>  
+        <div class="Academy" id="Academy" style="width: 100%; height: fit-content; margin: 0 auto; display: none;">
                 <div class="Schedule">
+                    {% if sortedLCSMatches[0]|length > 0 %}
+                        <div>
+                            <h1>Week 1</h1>
+                        </div>
+                    {% endif %}
+                    {% set countWeek = namespace(value=0) %}
                     {% for schedule in sortedLCSAcademyMatches[0] %}
+                    {% if countWeek.value == 4 %}
+                        {% set countWeek.value = 0 %}
+                        <div>
+                            <h1>Week {{(loop.index0/4 + 1)|int}}</h1>
+                        </div>
+                    {% endif %}
                         <div class="collapsible">
                             
                             <h1 style="color: rgba(85, 115, 249, 1.00); font-size: 3rem; padding: 0px; font-family: 'Work Sans', sans-serif; margin: 0px;">{{schedule[0].matchTime}}</h1>
@@ -514,11 +550,11 @@
                                     <div class="collapsible" style="background-color: rgba(125, 125, 125, 1.00);  line-height: 1rem; border-radius: .5rem; padding-left: .5rem;" id="{{matches.gameID}}" onclick="openModal([{{outer_loop.index0}}, {{loop.index0}}, 0]) ">
                                         <h3 style="display: inline; color: black;"><u><b>{{matches.teamA}}</b></u>Pts - </h3>
                                         {% set count = namespace(value=0) %}
-
+    
                                         {% for players in sortedLCSAcademyMatches[1][outer_loop.index0][loop.index0] %}
                                             {% if loop.index0 < 5 %}
                                             {% set count.value = count.value + players.playerScore %}
-
+    
                                                 <span>
                                                     <h4 style="display: inline; padding-left: 1rem; color: black;">{{players.playerName}}: </h4>
                                                     <h4 style="display: inline; color: rgba(158, 208, 173, 1.00);"> {{players.playerScore}} </h4> 
@@ -532,7 +568,7 @@
             
                                     <div class="content" style="width: 90%; height: 90%; margin: 0 auto;">
                                             <h1 style="color: cornflowerblue;">GameID: {{matches.gameID}}</h1>
-
+    
                                             {% for players in sortedLCSAcademyMatches[1][outer_loop.index0][loop.index0] %}
                                                 {% if loop.index0 < 5 %}
                                                     <div>
@@ -550,12 +586,12 @@
                                     <div class="collapsible" style="background-color: rgba(125, 125, 125, 1.00);  line-height: 1rem; border-radius: .5rem; padding-left: .5rem;" id="{{matches.gameID}}" onclick="openModal([{{outer_loop.index0}}, {{loop.index0}}, 5])">
                                         <h3 style="display: inline; color: black;"><u><b>{{matches.teamB}}</b></u> Pts - </h3>
                                         {% set count = namespace(value=0) %}
-
+    
                                         {% for players in sortedLCSAcademyMatches[1][outer_loop.index0][loop.index0] %}
                                             
                                             {% if loop.index0 > 4 %}
                                             {% set count.value = count.value + players.playerScore %}
-
+    
                                                 <span>
                                                     <h4 style="display: inline; padding-left: 1rem; color: black;">{{players.playerName}}: </h4>
                                                     <h4 style="display: inline; color: rgba(158, 208, 173, 1.00);"> {{players.playerScore}} </h4> 
@@ -567,7 +603,7 @@
                                     </div>
                                     <div class="content" style="width: 90%; height: 90%; margin: 0 auto;">
                                             <h1 style="color: cornflowerblue;">GameID: {{matches.gameID}}</h1>
-
+    
                                             {% for players in sortedLCSAcademyMatches[1][outer_loop.index0][loop.index0] %}
                                                 {% if loop.index0 > 4 %}
                                                     <div>
@@ -588,11 +624,10 @@
                             <br><br><br><br><br><br><br><br><br><br><br><br><br>
                         </div>
                         <br><br>
-                    {% endfor %}
+                        {% set countWeek.value = countWeek.value + 1 %}
 
-            </div>  
-            
-        </div>  
+                    {% endfor %}
+            </div>
     </div>   
     
 </div>

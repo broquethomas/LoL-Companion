@@ -112,53 +112,14 @@ def index():
             lcsMatchStats.append(EsportsMatchStats.query.filter_by(matchID = matches.gameID).order_by(EsportsMatchStats.playerTeam).all())
     if(len(allMatches) == 0):
         runApp = False
-    
+
     previous = ""
     buildArray = []
-    statsBuildArray = []
+    statsBuildArray = [] 
     innerBuildArray = []
     innerStatsBuildArray = []
     firstRun = True
     count = 0
-    daySchedule = []
-    dayScheduleStats = []
-    matchCount = 0
-    statsCount = 0
-    for matches in lcsMatches:
-        innerBuildArray.append(matches)
-        innerStatsBuildArray.append(lcsMatchStats[statsCount])
-        matchCount += 1
-        if(matchCount == 4 or matchCount == 8):
-            daySchedule.append(innerBuildArray)
-            dayScheduleStats.append(innerStatsBuildArray)
-            innerBuildArray = []
-            innerStatsBuildArray = []
-        if(matchCount == 10):
-            daySchedule.append(innerBuildArray)
-            dayScheduleStats.append(innerStatsBuildArray)
-            buildArray.append(daySchedule)
-            statsBuildArray.append(dayScheduleStats)
-            innerBuildArray = []
-            innerStatsBuildArray = []
-            daySchedule = []
-            dayScheduleStats = []
-            matchCount = 0
-        statsCount += 1
-
-    if(len(innerBuildArray) > 0):
-        daySchedule.append(innerBuildArray)
-        dayScheduleStats.append(innerStatsBuildArray)
-        buildArray.append(daySchedule)
-        statsBuildArray.append(dayScheduleStats)
-    sortedLCSMatches = [buildArray, statsBuildArray]
-    previous = ""
-    buildArray = []
-    statsBuildArray = []
-    innerBuildArray = []
-    innerStatsBuildArray = []
-    firstRun = True
-    count = 0
-
     print(sortedLCSMatches, file=sys.stderr);
     for matches in lcsMatches:
         if(firstRun):
@@ -182,7 +143,7 @@ def index():
     buildArray.append(innerBuildArray)
     statsBuildArray.append(innerStatsBuildArray)
     sortedLCSMatches = [buildArray, statsBuildArray]
-    
+
     previous = ""
     buildArray = []
     statsBuildArray = []
