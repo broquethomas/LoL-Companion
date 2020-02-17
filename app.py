@@ -1,12 +1,15 @@
 from flask import Flask, render_template, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask import request
+from flask_cors import CORS, cross_origin
+
 from datetime import datetime
 import sqlite3
 import sys
 
 app = Flask(__name__)
-
+CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 app.config['SQLALCHEMY_TRACK_MODIFCATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] =  'sqlite:///db.sqlite3'
 
