@@ -541,7 +541,7 @@
                 {% set countWeek = namespace(value=0) %}
                 {% for schedule in sortedLECMatches[0] %}
     
-                {% if countWeek.value == 4 %}
+                {% if countWeek.value == 2 %}
                     {% set countWeek.value = 0 %}
                     <div>
                         <h1>Week {{(loop.index0/3 + 1)|int}}</h1>
@@ -651,7 +651,7 @@
                 {% set countWeek = namespace(value=0) %}
                 {% for schedule in sortedLCKMatches[0] %}
     
-                {% if countWeek.value == 4 %}
+                {% if countWeek.value == 5 %}
                     {% set countWeek.value = 0 %}
                     <div>
                         <h1>Week {{(loop.index0/3 + 1)|int}}</h1>
