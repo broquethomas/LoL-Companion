@@ -39,6 +39,7 @@ class EsportsMatch(db.Model):
     matchID = db.Column(db.Integer, primary_key = True)
     gameID = db.Column(db.Integer)
     matchType = db.Column(db.Integer)
+    leagueName = db.Column(db.String(200))
     teamA = db.Column(db.String(200))
     teamB = db.Column(db.String(200))
     matchTime = db.Column(db.String(200))
@@ -50,6 +51,7 @@ class EsportsMatchStats(db.Model):
     matchID = db.Column(db.Integer, primary_key = True, unique=False)
     playerID = db.Column(db.Integer, db.ForeignKey("esports_user.playerID"), primary_key = True)
     matchType = db.Column(db.Integer, primary_key = True)
+    leagueName = db.Column(db.String(200))
     playerName = db.Column(db.String(200))
     playerTeam = db.Column(db.Integer)
     legend = db.Column(db.String(200))
@@ -91,15 +93,24 @@ def index():
     allMatches = EsportsMatch.query.all()
     lcsMatches = []
     lcsMatchStats = []
+    lecMatches = []
+    lecMatchStats = []
+    lckMatches = []
+    lckMatchStats = []
     lcsAcademyMatches = []
     lcsAcademyMatchStats = []
     allTeamPlayers = []
     allMatchesSorted = []
     allMatchStatsSorted = []
     sortedLCSMatches = []
+    sortedLECMatches = []
+    sortedLCKMatches = []
     sortedLCSAcademyMatches = []
     sortedLCSMatchStats = []
+    sortedLECMatchStats = []
+    sortedLCKMatchStats = []
     sortedLCSAcademyMatchStats = []
+
     runApp = True
     lastGameID = 0
     matchCount = len(allMatches)
@@ -107,12 +118,18 @@ def index():
     if(len(allMatches) > 0):
         lastGameID = int(allMatches[len(allMatches)-1].gameID)
     for matches in allMatches:
-        if(int(matches.matchType) == 0 or str(matches.matchType) == "0"):
+        if(str(matches.leagueName) == "LCS Academy"):
             lcsAcademyMatches.append(matches)
             lcsAcademyMatchStats.append(EsportsMatchStats.query.filter_by(matchID = matches.gameID).order_by(EsportsMatchStats.playerTeam).all())
-        else:
+        elif(str(matches.leagueName) == "LCS"):
             lcsMatches.append(matches)
             lcsMatchStats.append(EsportsMatchStats.query.filter_by(matchID = matches.gameID).order_by(EsportsMatchStats.playerTeam).all())
+        elif(str(matches.leagueName) == "LEC"):
+            lecMatches.append(matches)
+            lecMatchStats.append(EsportsMatchStats.query.filter_by(matchID = matches.gameID).order_by(EsportsMatchStats.playerTeam).all())
+        elif(str(matches.leagueName) == "LCK"):
+            lckMatches.append(matches)
+            lckMatchStats.append(EsportsMatchStats.query.filter_by(matchID = matches.gameID).order_by(EsportsMatchStats.playerTeam).all())
     if(len(allMatches) == 0):
         runApp = False
 
@@ -177,19 +194,84 @@ def index():
     buildArray.append(innerBuildArray)
     statsBuildArray.append(innerStatsBuildArray)
     sortedLCSAcademyMatches = [buildArray, statsBuildArray]
+
+    previous = ""
+    buildArray = []
+    statsBuildArray = [] 
+    innerBuildArray = []
+    innerStatsBuildArray = []
+    firstRun = True
+    count = 0
+    for matches in lecMatches:
+        if(firstRun):
+            innerBuildArray.append(matches)
+            innerStatsBuildArray.append(lecMatchStats[count])
+            previous = matches.matchTime
+            firstRun = False
+        else:
+            if(matches.matchTime != previous):
+                buildArray.append(innerBuildArray)
+                statsBuildArray.append(innerStatsBuildArray)
+                innerStatsBuildArray = []
+                innerBuildArray = []
+                innerBuildArray.append(matches)
+                innerStatsBuildArray.append(lecMatchStats[count])
+                previous = matches.matchTime
+            else:
+                innerBuildArray.append(matches)
+                innerStatsBuildArray.append(lecMatchStats[count])
+        count += 1
+    buildArray.append(innerBuildArray)
+    statsBuildArray.append(innerStatsBuildArray)
+    sortedLECMatches = [buildArray, statsBuildArray]
+
+    previous = ""
+    buildArray = []
+    statsBuildArray = [] 
+    innerBuildArray = []
+    innerStatsBuildArray = []
+    firstRun = True
+    count = 0
+    print(sortedLCSMatches, file=sys.stderr);
+    for matches in lckMatches:
+        if(firstRun):
+            innerBuildArray.append(matches)
+            innerStatsBuildArray.append(lckMatchStats[count])
+            previous = matches.matchTime
+            firstRun = False
+        else:
+            if(matches.matchTime != previous):
+                buildArray.append(innerBuildArray)
+                statsBuildArray.append(innerStatsBuildArray)
+                innerStatsBuildArray = []
+                innerBuildArray = []
+                innerBuildArray.append(matches)
+                innerStatsBuildArray.append(lckMatchStats[count])
+                previous = matches.matchTime
+            else:
+                innerBuildArray.append(matches)
+                innerStatsBuildArray.append(lckMatchStats[count])
+        count += 1
+    buildArray.append(innerBuildArray)
+    statsBuildArray.append(innerStatsBuildArray)
+    sortedLCKMatches = [buildArray, statsBuildArray]
+
+    
     if(not runApp):
         sortedLCSMatches = []
         sortedLCSAcademyMatches = []
+        sortedLCKMatches = []
+        sortedLECMatches = []
 
     
     for team in allTeams:
         allTeamPlayers.append(EsportsUser.query.filter_by(teamID = team.teamID).all())
 
-    print(lastGameID, file=sys.stderr);
 
     return render_template('index.html', allTeams = allTeams, 
         allTeamPlayers=allTeamPlayers, allMatches = allMatches, 
         lastGameID = lastGameID, matchCount = matchCount, sortedLCSMatches = sortedLCSMatches, 
+        sortedLCKMatches = sortedLCKMatches, sortedLECMatches = sortedLECMatches, 
         sortedLCSAcademyMatches = sortedLCSAcademyMatches, runApp = runApp, title="Show Teams")
 
 
@@ -210,7 +292,7 @@ def store_game_data():
 
         user = getEsportsUser(request.get_json()["playerName"])
         updateTeamMatchWins(teamID, int(request.get_json()["matchWin"]))
-        createEsportsMatch(int(request.get_json()["gameID"]), user.playerID, str(request.get_json()["playerName"]), str(request.get_json()["legend"]), int(request.get_json()["kills"]), int(request.get_json()["assists"]), int(request.get_json()["deaths"]), int(request.get_json()["creepScore"]), int(request.get_json()["teamTotal"]), int(request.get_json()["matchType"]), str(request.get_json()["matchTime"]), str(request.get_json()["teamA"]), str(request.get_json()["teamB"]), int(request.get_json()["teamAWin"]), int(request.get_json()["teamBWin"]), int(request.get_json()["playerTeam"]))        
+        createEsportsMatch(int(request.get_json()["gameID"]), user.playerID, str(request.get_json()["playerName"]), str(request.get_json()["legend"]), int(request.get_json()["kills"]), int(request.get_json()["assists"]), int(request.get_json()["deaths"]), int(request.get_json()["creepScore"]), int(request.get_json()["teamTotal"]), int(request.get_json()["matchType"]), str(request.get_json()["matchTime"]), str(request.get_json()["teamA"]), str(request.get_json()["teamB"]), int(request.get_json()["teamAWin"]), int(request.get_json()["teamBWin"]), int(request.get_json()["playerTeam"]), str(request.get_json()["leagueName"]))        
 
         
         return ('', 204)
@@ -244,10 +326,10 @@ def updateTeamMatchWins(teamID, matchWin):
 def getEsportsMatch(gameID):
     matches = EsportsMatchStats.query.filter_by(gameID = gameID).all()
 
-def createEsportsMatch(gameID, playerID, playerName, legend, kills, assists, deaths, creepScore, totalTeamKills, matchType, matchTime, teamA, teamB, teamAWin, teamBWin, playerTeam):
-    matchStats = EsportsMatchStats(matchID = gameID, playerName = playerName, playerID = playerID, legend = legend, kills = kills, assists = assists, deaths = deaths, creepScore = creepScore, totalTeamKills = totalTeamKills, matchType = matchType, matchTime = matchTime, playerTeam = playerTeam, killParticipation = (totalTeamKills / max(1, kills+assists)), playerScore = calculatePlayerScore(kills, assists, deaths, creepScore, totalTeamKills))
+def createEsportsMatch(gameID, playerID, playerName, legend, kills, assists, deaths, creepScore, totalTeamKills, matchType, matchTime, teamA, teamB, teamAWin, teamBWin, playerTeam, leagueName):
+    matchStats = EsportsMatchStats(matchID = gameID, playerName = playerName, playerID = playerID, legend = legend, kills = kills, assists = assists, deaths = deaths, creepScore = creepScore, totalTeamKills = totalTeamKills, matchType = matchType, leagueName = leagueName, matchTime = matchTime, playerTeam = playerTeam, killParticipation = (totalTeamKills / max(1, kills+assists)), playerScore = calculatePlayerScore(kills, assists, deaths, creepScore, totalTeamKills))
     if (EsportsMatch.query.filter_by(gameID = gameID).first() == None):
-        match = EsportsMatch(gameID = gameID, teamA = teamA, teamB = teamB, matchTime = matchTime, teamAWin = teamAWin, teamBWin = teamBWin, matchType = matchType)
+        match = EsportsMatch(gameID = gameID, teamA = teamA, teamB = teamB, matchTime = matchTime, teamAWin = teamAWin, teamBWin = teamBWin, matchType = matchType, leagueName = leagueName)
         db.session.add(match)
 
     db.session.add(matchStats)
