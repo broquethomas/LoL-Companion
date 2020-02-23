@@ -251,12 +251,16 @@
                     location = gameID
                     teamA.push([data.data.schedule.events[i].match.teams[0].name.replace(" ", "."), String(data.data.schedule.events[i].match.teams[0].result.gameWins), gameID, leagueName])
                     teamB.push([data.data.schedule.events[i].match.teams[1].name.replace(" ", "."), String(data.data.schedule.events[i].match.teams[1].result.gameWins), gameID, leagueName])
-                    allGames.push(memberData = await fetchAsyncEsportsMembers(esportsMemberURL + gameID + "?startingTime=" + newStartTime.toISOString(), gameID ))
-                    if(leagueName == "LCS Academy"){
+                    memberData = await fetchAsyncEsportsMembers(esportsMemberURL + gameID + "?startingTime=" + newStartTime.toISOString(), gameID )
+                    if(memberData != undefined){
+                        allGames.push(memberData)
+                        if(leagueName == "LCS Academy"){
                         matchTypes.push(0)
-                    }else{
-                        matchTypes.push(1)
+                        }else{
+                            matchTypes.push(1)
+                        }
                     }
+                    
                 }
                 
             }
@@ -269,12 +273,14 @@
     }
 
     async function fetchAsyncEsportsMembers (url, gameID) {
+        console.log(gameID)
         let response = await fetch(url, {
                             headers: {
                                 "x-api-key": "0TvQnueqKa5mxJntVWt0w4LpLfEkrV1Ta8rQBb9Z"
                             }
                     });
-        let data = await response.json();
+        if(await response.status == 200){
+            let data = await response.json();
         
         let playerName, playerKills, playerAssists, playerCreepScore, playerTripleKills, playerQuadraKills, playerPentaKills
         
@@ -324,6 +330,8 @@
             console.log(matchMembers)
         }
         return matchMembers
+        }
+        
     }
 
     function swap() {
