@@ -137,13 +137,13 @@
 
     async function updateDataBase(collectedData){
         let playerCollection = []
-
-        if(collectedData[1].length > {{matchCount}}){
+        if(true){
             matchCount = {{matchCount}}
 
             if(matchCount == 0){
                 matchCount += 1
             }
+            matchCount = 1
             for(var i = matchCount - 1; i < collectedData[1].length; i++){
             for(var x = 0; x < collectedData[1][i].length-1; x++){
                 let teamA = true
@@ -173,10 +173,14 @@
                             },
                             body: JSON.stringify(player)
                         })
+                    }else{
+                        console.log("nope")
                     }
                 }
             }
         }
+        }else{
+            console.log("nope")
         }
         return true
     }
@@ -243,17 +247,19 @@
                     }
                     let newStartTime = new Date(data.data.schedule.events[i].startTime);
                     let timeSplit = String(data.data.schedule.events[i].startTime).split("-")
-                    checkTimes.push(data.data.schedule.events[i].startTime)
                     newTime = timeSplit[2].substring(0, 2) + "-" + timeSplit[1] + "-" + timeSplit[0]
-                    matchTimes.push(newTime)
+                    
                     newStartTime.setSeconds((newStartTime.getSeconds() + ((timeNow - newStartTime) / 1000)));
                     newStartTime.setSeconds(((Math.floor(newStartTime.getSeconds() / 10)) * 10) - 30);
                     location = gameID
-                    teamA.push([data.data.schedule.events[i].match.teams[0].name.replace(" ", "."), String(data.data.schedule.events[i].match.teams[0].result.gameWins), gameID, leagueName])
-                    teamB.push([data.data.schedule.events[i].match.teams[1].name.replace(" ", "."), String(data.data.schedule.events[i].match.teams[1].result.gameWins), gameID, leagueName])
                     memberData = await fetchAsyncEsportsMembers(esportsMemberURL + gameID + "?startingTime=" + newStartTime.toISOString(), gameID )
                     if(memberData != undefined){
+                        teamA.push([data.data.schedule.events[i].match.teams[0].name.replace(" ", "."), String(data.data.schedule.events[i].match.teams[0].result.gameWins), gameID, leagueName])
+                        teamB.push([data.data.schedule.events[i].match.teams[1].name.replace(" ", "."), String(data.data.schedule.events[i].match.teams[1].result.gameWins), gameID, leagueName])
                         allGames.push(memberData)
+                        matchTimes.push(newTime)
+                        checkTimes.push(data.data.schedule.events[i].startTime)
+
                         if(leagueName == "LCS Academy"){
                         matchTypes.push(0)
                         }else{
